@@ -12,6 +12,7 @@
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": false,
     "noEmit": true,
+    "composite": true,
 
     /* Linting */
     "skipLibCheck": true,
@@ -25,5 +26,10 @@
       "@/worker/*": ["./worker/*"],
       "@/*": ["./src/*"]
     }
-  }
+  },
+  "references": [
+    {
+      "path": "../../packages/data-ops"
+    }
+  ]
 }
