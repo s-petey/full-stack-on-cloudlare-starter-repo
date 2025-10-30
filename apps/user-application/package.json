@@ -9,6 +9,7 @@
     "serve": "vite preview",
     "test": "vitest run",
     "cf-typegen": "wrangler types --env-interface Env",
+    "cf-migrate": "wrangler d1 migrations apply --local smart-links-stage",
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
