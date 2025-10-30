@@ -1,6 +1,6 @@
 -- Current sql file was generated after introspecting the database
 -- If you want to run this migration please uncomment this code before executing migrations
-/*
+-- /*
 CREATE TABLE `links` (
 	`link_id` text PRIMARY KEY NOT NULL,
 	`account_id` text NOT NULL,
@@ -34,4 +34,4 @@ CREATE TABLE `destination_evaluations` (
 );
 --> statement-breakpoint
 CREATE INDEX `idx_destination_evaluations_account_time` ON `destination_evaluations` (`account_id`,`created_at`);
-*/
+-- */
