@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 export default function Pending() {
   return (
@@ -13,7 +13,7 @@ export default function Pending() {
           <motion.div
             className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full"
             animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           />
         </motion.div>
 
@@ -32,7 +32,7 @@ export default function Pending() {
                 duration: 0.6,
                 repeat: Infinity,
                 delay: i * 0.2,
-                ease: "easeInOut",
+                ease: 'easeInOut',
               }}
             />
           ))}

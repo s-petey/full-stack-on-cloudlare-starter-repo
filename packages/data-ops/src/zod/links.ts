@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const destinationsSchema = z.preprocess(
   (obj) => {
-    if (typeof obj === "string") {
+    if (typeof obj === 'string') {
       console.log(obj);
       return JSON.parse(obj);
     }
@@ -12,7 +12,7 @@ export const destinationsSchema = z.preprocess(
     .object({
       default: z.url(),
     })
-    .catchall(z.url())
+    .catchall(z.url()),
 );
 
 export type DestinationsSchemaType = z.infer<typeof destinationsSchema>;
@@ -51,13 +51,9 @@ export const durableObjectGeoClickSchama = z.object({
   country: z.string(),
 });
 
-export const durableObjectGeoClickArraySchema = z.array(
-  durableObjectGeoClickSchama
-);
+export const durableObjectGeoClickArraySchema = z.array(durableObjectGeoClickSchama);
 
-export type DurableObjectGeoClickSchemaType = z.infer<
-  typeof durableObjectGeoClickSchama
->;
+export type DurableObjectGeoClickSchemaType = z.infer<typeof durableObjectGeoClickSchama>;
 
 export type CloudflareInfoSchemaType = z.infer<typeof cloudflareInfoSchema>;
 

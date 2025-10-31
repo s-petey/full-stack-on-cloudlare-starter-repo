@@ -1,6 +1,6 @@
-import { betterAuth } from "better-auth";
-import { DatabaseSync } from "node:sqlite";
+import { betterAuth } from 'better-auth';
+import { DatabaseSync } from 'node:sqlite';
 
 export const auth = betterAuth({
-  database: new DatabaseSync("./sqlite.db"),
+  database: new DatabaseSync('./sqlite.db'),
 });

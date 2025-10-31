@@ -1,13 +1,10 @@
-import { getDb } from "@/db/database";
-import { links } from "@/drizzle-out/schema";
-import { CreateLinkSchemaType, linkSchema, LinkSchemaType } from "@/zod/links";
-import { nanoid } from "nanoid";
-import { eq, and, gt, desc } from "drizzle-orm";
+import { getDb } from '@/db/database';
+import { links } from '@/drizzle-out/schema';
+import { CreateLinkSchemaType, linkSchema, LinkSchemaType } from '@/zod/links';
+import { nanoid } from 'nanoid';
+import { eq, and, gt, desc } from 'drizzle-orm';
 
-export async function createLink(
-  link: CreateLinkSchemaType,
-  accountId: LinkSchemaType["accountId"]
-) {
+export async function createLink(link: CreateLinkSchemaType, accountId: LinkSchemaType['accountId']) {
   const db = getDb();
 
   const newId = nanoid(10);
@@ -25,16 +22,13 @@ export async function createLink(
   ).at(0);
 
   if (!result) {
-    throw new Error("Failed to create link");
+    throw new Error('Failed to create link');
   }
 
   return result.linkId;
 }
 
-export async function getLinks(
-  accountId: LinkSchemaType["accountId"],
-  createdBefore?: string
-) {
+export async function getLinks(accountId: LinkSchemaType['accountId'], createdBefore?: string) {
   const db = getDb();
   const conditions = [eq(links.accountId, accountId)];
 
@@ -57,10 +51,7 @@ export async function getLinks(
   return parsedResults;
 }
 
-export async function updateLinkName(
-  { linkId, name }: { linkId: string; name: string },
-  accountId: LinkSchemaType["accountId"]
-) {
+export async function updateLinkName({ linkId, name }: { linkId: string; name: string }, accountId: LinkSchemaType['accountId']) {
   const db = getDb();
   const parsedName = linkSchema.shape.name.parse(name);
 
@@ -73,10 +64,7 @@ export async function updateLinkName(
     .where(and(eq(links.linkId, linkId), eq(links.accountId, accountId)));
 }
 
-export async function getLink(
-  linkId: LinkSchemaType["linkId"],
-  accountId: LinkSchemaType["accountId"]
-) {
+export async function getLink(linkId: LinkSchemaType['linkId'], accountId: LinkSchemaType['accountId']) {
   const db = getDb();
 
   const result = await db
@@ -96,11 +84,8 @@ export async function getLink(
 }
 
 export async function updateLinkDestinations(
-  {
-    linkId,
-    destinations,
-  }: { linkId: string; destinations: LinkSchemaType["destinations"] },
-  accountId: LinkSchemaType["accountId"]
+  { linkId, destinations }: { linkId: string; destinations: LinkSchemaType['destinations'] },
+  accountId: LinkSchemaType['accountId'],
 ) {
   const db = getDb();
   const destinationsParsed = linkSchema.shape.destinations.parse(destinations);

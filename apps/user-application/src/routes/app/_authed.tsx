@@ -1,10 +1,10 @@
-import { AppSidebar } from "@/components/common/app-sidebar";
-import { SiteHeader } from "@/components/common/site-header";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { Outlet, createFileRoute } from "@tanstack/react-router";
-import { Toaster } from "@/components/ui/sonner";
+import { AppSidebar } from '@/components/common/app-sidebar';
+import { SiteHeader } from '@/components/common/site-header';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { Outlet, createFileRoute } from '@tanstack/react-router';
+import { Toaster } from '@/components/ui/sonner';
 
-export const Route = createFileRoute("/app/_authed")({
+export const Route = createFileRoute('/app/_authed')({
   component: RouteComponent,
 });
 function RouteComponent() {
@@ -13,8 +13,8 @@ function RouteComponent() {
       <SidebarProvider
         style={
           {
-            "--sidebar-width": "calc(var(--spacing) * 72)",
-            "--header-height": "calc(var(--spacing) * 12)",
+            '--sidebar-width': 'calc(var(--spacing) * 72)',
+            '--header-height': 'calc(var(--spacing) * 12)',
           } as React.CSSProperties
         }
       >

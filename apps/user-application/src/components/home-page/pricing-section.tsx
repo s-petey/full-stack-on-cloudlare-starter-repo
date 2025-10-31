@@ -1,60 +1,54 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Check, Star } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Check, Star } from 'lucide-react';
 
 const plans = [
   {
-    name: "Starter",
-    price: "$9",
-    period: "/month",
-    description: "Perfect for small businesses and content creators",
+    name: 'Starter',
+    price: '$9',
+    period: '/month',
+    description: 'Perfect for small businesses and content creators',
     features: [
-      "1,000 tracked links/month",
-      "Basic analytics dashboard",
-      "Email notifications",
-      "Custom domains (1)",
-      "24/7 link monitoring",
+      '1,000 tracked links/month',
+      'Basic analytics dashboard',
+      'Email notifications',
+      'Custom domains (1)',
+      '24/7 link monitoring',
     ],
     popular: false,
   },
   {
-    name: "Professional",
-    price: "$29",
-    period: "/month",
-    description: "For growing businesses that need advanced features",
+    name: 'Professional',
+    price: '$29',
+    period: '/month',
+    description: 'For growing businesses that need advanced features',
     features: [
-      "10,000 tracked links/month",
-      "Advanced analytics & insights",
-      "Geo-based routing",
-      "Custom domains (5)",
-      "AI-powered monitoring",
-      "Backup routing",
-      "Slack/Teams integration",
-      "Priority support",
+      '10,000 tracked links/month',
+      'Advanced analytics & insights',
+      'Geo-based routing',
+      'Custom domains (5)',
+      'AI-powered monitoring',
+      'Backup routing',
+      'Slack/Teams integration',
+      'Priority support',
     ],
     popular: true,
   },
   {
-    name: "Enterprise",
-    price: "Custom",
-    period: "",
-    description: "For large organizations with custom requirements",
+    name: 'Enterprise',
+    price: 'Custom',
+    period: '',
+    description: 'For large organizations with custom requirements',
     features: [
-      "Unlimited tracked links",
-      "White-label solution",
-      "Advanced security features",
-      "Custom integrations",
-      "Dedicated account manager",
-      "SLA guarantees",
-      "Custom reporting",
-      "On-premise deployment",
+      'Unlimited tracked links',
+      'White-label solution',
+      'Advanced security features',
+      'Custom integrations',
+      'Dedicated account manager',
+      'SLA guarantees',
+      'Custom reporting',
+      'On-premise deployment',
     ],
     popular: false,
   },
@@ -69,12 +63,9 @@ export function PricingSection() {
           <Badge variant="outline" className="mb-4 px-3 py-1">
             Pricing
           </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-            Simple, transparent pricing
-          </h2>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Simple, transparent pricing</h2>
           <p className="text-lg text-muted-foreground">
-            Choose the plan that fits your needs. All plans include our core
-            link protection features.
+            Choose the plan that fits your needs. All plans include our core link protection features.
           </p>
         </div>
 
@@ -83,7 +74,7 @@ export function PricingSection() {
           {plans.map((plan, index) => (
             <Card
               key={index}
-              className={`relative ${plan.popular ? "border-primary shadow-lg scale-105" : "border-border"} bg-card/50 backdrop-blur`}
+              className={`relative ${plan.popular ? 'border-primary shadow-lg scale-105' : 'border-border'} bg-card/50 backdrop-blur`}
             >
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -100,9 +91,7 @@ export function PricingSection() {
                   <span className="text-3xl font-bold">{plan.price}</span>
                   <span className="text-muted-foreground">{plan.period}</span>
                 </div>
-                <CardDescription className="mt-2">
-                  {plan.description}
-                </CardDescription>
+                <CardDescription className="mt-2">{plan.description}</CardDescription>
               </CardHeader>
 
               <CardContent className="space-y-6">
@@ -115,14 +104,8 @@ export function PricingSection() {
                   ))}
                 </ul>
 
-                <Button
-                  className="w-full"
-                  variant={plan.popular ? "default" : "outline"}
-                  size="lg"
-                >
-                  {plan.name === "Enterprise"
-                    ? "Contact Sales"
-                    : "Start Free Trial"}
+                <Button className="w-full" variant={plan.popular ? 'default' : 'outline'} size="lg">
+                  {plan.name === 'Enterprise' ? 'Contact Sales' : 'Start Free Trial'}
                 </Button>
               </CardContent>
             </Card>
@@ -131,9 +114,7 @@ export function PricingSection() {
 
         {/* Additional info */}
         <div className="text-center mt-12">
-          <p className="text-sm text-muted-foreground">
-            All plans include a 14-day free trial. No credit card required.
-          </p>
+          <p className="text-sm text-muted-foreground">All plans include a 14-day free trial. No credit card required.</p>
         </div>
       </div>
     </section>

@@ -1,26 +1,23 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { X, Search } from "lucide-react";
-import iso31661 from "iso-3166-1";
-import { DestinationsSchemaType } from "@repo/data-ops/zod-schema/links";
-import { queryClient, trpc } from "@/router";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useState, useMemo } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { X, Search } from 'lucide-react';
+import iso31661 from 'iso-3166-1';
+import { DestinationsSchemaType } from '@repo/data-ops/zod-schema/links';
+import { queryClient, trpc } from '@/router';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { useState, useMemo } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface GeographicDestinationsListProps {
   linkId: string;
   destinations: DestinationsSchemaType;
 }
 
-export function GeographicDestinationsList({
-  linkId,
-  destinations,
-}: GeographicDestinationsListProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+export function GeographicDestinationsList({ linkId, destinations }: GeographicDestinationsListProps) {
+  const [searchQuery, setSearchQuery] = useState('');
 
   const updateDestinationMutation = useMutation(
     trpc.links.updateLinkDestinations.mutationOptions({
@@ -30,10 +27,10 @@ export function GeographicDestinationsList({
             linkId,
           }),
         });
-        toast.success("Removed destination successfully");
+        toast.success('Removed destination successfully');
       },
       onError: () => {
-        toast.error("Failed to remove destination");
+        toast.error('Failed to remove destination');
       },
     }),
   );
@@ -57,9 +54,7 @@ export function GeographicDestinationsList({
 
   // Get all country codes except 'default' and sort by country name
   const sortedCountryEntries = useMemo(() => {
-    const countryEntries = Object.entries(destinations).filter(
-      ([key]) => key !== "default",
-    );
+    const countryEntries = Object.entries(destinations).filter(([key]) => key !== 'default');
 
     return countryEntries.sort(([codeA], [codeB]) => {
       const nameA = getCountryNameByCode(codeA);
@@ -86,12 +81,7 @@ export function GeographicDestinationsList({
       {showSearch && (
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-          <Input
-            placeholder="Search countries..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
+          <Input placeholder="Search countries..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-10" />
         </div>
       )}
       <AnimatePresence mode="popLayout">
@@ -100,21 +90,17 @@ export function GeographicDestinationsList({
             key={countryCode}
             layout
             initial={{ opacity: 0, height: 0, marginBottom: 0 }}
-            animate={{ opacity: 1, height: "auto", marginBottom: 12 }}
+            animate={{ opacity: 1, height: 'auto', marginBottom: 12 }}
             exit={{ opacity: 0, height: 0, marginBottom: 0 }}
             transition={{
               duration: 0.3,
-              ease: "easeInOut",
+              ease: 'easeInOut',
               layout: { duration: 0.2 },
             }}
             className="flex items-center gap-3 p-4 rounded-lg border bg-muted/50 overflow-hidden"
           >
-            <Badge variant="secondary">
-              {getCountryNameByCode(countryCode)}
-            </Badge>
-            <div className="flex-1 font-mono text-sm text-muted-foreground  px-3 py-2 rounded border">
-              {url}
-            </div>
+            <Badge variant="secondary">{getCountryNameByCode(countryCode)}</Badge>
+            <div className="flex-1 font-mono text-sm text-muted-foreground  px-3 py-2 rounded border">{url}</div>
             <Button
               variant="ghost"
               size="sm"

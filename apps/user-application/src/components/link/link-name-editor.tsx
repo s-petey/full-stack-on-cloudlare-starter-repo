@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Link, Edit3, Check, Eye } from "lucide-react";
-import { queryClient, trpc } from "@/router";
-import { useMutation } from "@tanstack/react-query";
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Link, Edit3, Check, Eye } from 'lucide-react';
+import { queryClient, trpc } from '@/router';
+import { useMutation } from '@tanstack/react-query';
 
 interface LinkNameEditorProps {
   linkId: string;
@@ -59,12 +59,7 @@ export function LinkNameEditor({ linkId, initialName }: LinkNameEditorProps) {
             <Eye className="w-3 h-3" />
             Active
           </Badge>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsEditing(true)}
-            className="h-8 w-8 p-0"
-          >
+          <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)} className="h-8 w-8 p-0">
             <Edit3 className="w-4 h-4" />
           </Button>
         </div>

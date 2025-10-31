@@ -1,4 +1,4 @@
-import { Separator } from "@/components/ui/separator";
+import { Separator } from '@/components/ui/separator';
 
 export function Footer() {
   return (
@@ -119,15 +119,11 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">
-                SL
-              </span>
+              <span className="text-primary-foreground font-bold text-sm">SL</span>
             </div>
             <span className="font-semibold">SmartLinks</span>
           </div>
-          <p className="text-sm text-muted-foreground">
-            © 2024 SmartLinks. All rights reserved.
-          </p>
+          <p className="text-sm text-muted-foreground">© 2024 SmartLinks. All rights reserved.</p>
         </div>
       </div>
     </footer>

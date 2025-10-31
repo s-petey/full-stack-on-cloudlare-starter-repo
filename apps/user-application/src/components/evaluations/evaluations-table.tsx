@@ -1,29 +1,12 @@
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { ChevronLeft, ChevronRight, Info } from "lucide-react";
-import { trpc } from "@/router";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { ChevronLeft, ChevronRight, Info } from 'lucide-react';
+import { trpc } from '@/router';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
+import { useState } from 'react';
 
 type Evaluation = {
   id: string;
@@ -37,9 +20,7 @@ type Evaluation = {
 
 export function EvaluationsTable() {
   const navigate = useNavigate();
-  const [createdBefore, setCreatedBefore] = useState<string | undefined>(
-    undefined,
-  );
+  const [createdBefore, setCreatedBefore] = useState<string | undefined>(undefined);
   const [paginationHistory, setPaginationHistory] = useState<string[]>([]);
 
   const { data: evaluationsData } = useSuspenseQuery(
@@ -52,64 +33,58 @@ export function EvaluationsTable() {
   const columnHelper = createColumnHelper<Evaluation>();
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
   };
 
   const getStatusDisplay = (status: string) => {
     const statusConfig = {
       AVAILABLE_PRODUCT: {
-        label: "Available",
-        classes: "bg-green-100 text-green-800 border-green-200",
+        label: 'Available',
+        classes: 'bg-green-100 text-green-800 border-green-200',
       },
       NOT_AVAILABLE_PRODUCT: {
-        label: "Not Available",
-        classes: "bg-red-100 text-red-800 border-red-200",
+        label: 'Not Available',
+        classes: 'bg-red-100 text-red-800 border-red-200',
       },
       UNKNOWN_STATUS: {
-        label: "Unknown",
-        classes: "bg-gray-100 text-gray-800 border-gray-200",
+        label: 'Unknown',
+        classes: 'bg-gray-100 text-gray-800 border-gray-200',
       },
     };
 
     const config = statusConfig[status as keyof typeof statusConfig] || {
       label: status,
-      classes: "bg-gray-100 text-gray-800 border-gray-200",
+      classes: 'bg-gray-100 text-gray-800 border-gray-200',
     };
 
     return config;
   };
 
   const columns = [
-    columnHelper.accessor("createdAt", {
-      header: "Created At",
-      cell: (info) => (
-        <div className="text-sm text-muted-foreground">
-          {formatDate(info.getValue())}
-        </div>
-      ),
+    columnHelper.accessor('createdAt', {
+      header: 'Created At',
+      cell: (info) => <div className="text-sm text-muted-foreground">{formatDate(info.getValue())}</div>,
     }),
-    columnHelper.accessor("status", {
-      header: "Status",
+    columnHelper.accessor('status', {
+      header: 'Status',
       cell: (info) => {
         const status = info.getValue();
         const statusDisplay = getStatusDisplay(status);
         return (
-          <span
-            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${statusDisplay.classes}`}
-          >
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${statusDisplay.classes}`}>
             {statusDisplay.label}
           </span>
         );
       },
     }),
-    columnHelper.accessor("reason", {
-      header: "Reason",
+    columnHelper.accessor('reason', {
+      header: 'Reason',
       cell: (info) => (
         <TooltipProvider>
           <Tooltip>
@@ -123,8 +98,8 @@ export function EvaluationsTable() {
         </TooltipProvider>
       ),
     }),
-    columnHelper.accessor("destinationUrl", {
-      header: "Destination URL",
+    columnHelper.accessor('destinationUrl', {
+      header: 'Destination URL',
       cell: (info) => {
         const url = info.getValue();
         return (
@@ -132,7 +107,7 @@ export function EvaluationsTable() {
             className="text-sm font-medium text-ellipsis overflow-hidden max-w-[200px] text-blue-600 hover:text-blue-800 cursor-pointer underline"
             onClick={(e) => {
               e.stopPropagation();
-              window.open(url, "_blank");
+              window.open(url, '_blank');
             }}
           >
             {url}
@@ -150,7 +125,7 @@ export function EvaluationsTable() {
 
   const handleNextPage = () => {
     if (evaluationsData.oldestCreatedAt) {
-      setPaginationHistory((prev) => [...prev, createdBefore || ""]);
+      setPaginationHistory((prev) => [...prev, createdBefore || '']);
       setCreatedBefore(evaluationsData.oldestCreatedAt);
     }
   };
@@ -160,9 +135,7 @@ export function EvaluationsTable() {
       const newHistory = [...paginationHistory];
       const previousCreatedBefore = newHistory.pop();
       setPaginationHistory(newHistory);
-      setCreatedBefore(
-        previousCreatedBefore === "" ? undefined : previousCreatedBefore,
-      );
+      setCreatedBefore(previousCreatedBefore === '' ? undefined : previousCreatedBefore);
     }
   };
 
@@ -175,12 +148,7 @@ export function EvaluationsTable() {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead className="pl-4" key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 ))}
               </TableRow>
@@ -191,31 +159,23 @@ export function EvaluationsTable() {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() && 'selected'}
                   className="cursor-pointer hover:bg-muted/50"
                   onClick={() => {
                     navigate({
-                      to: "/app/link/$id",
+                      to: '/app/link/$id',
                       params: { id: row.original.linkId },
                     });
                   }}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
+                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   No evaluations found.
                 </TableCell>
               </TableRow>
@@ -225,16 +185,9 @@ export function EvaluationsTable() {
       </div>
 
       <div className="flex items-center justify-between px-2">
-        <div className="flex-1 text-sm text-muted-foreground">
-          Showing {evaluations.length} entries
-        </div>
+        <div className="flex-1 text-sm text-muted-foreground">Showing {evaluations.length} entries</div>
         <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handlePreviousPage}
-            disabled={paginationHistory.length === 0}
-          >
+          <Button variant="outline" size="sm" onClick={handlePreviousPage} disabled={paginationHistory.length === 0}>
             <ChevronLeft className="h-4 w-4" />
             Previous
           </Button>
@@ -242,9 +195,7 @@ export function EvaluationsTable() {
             variant="outline"
             size="sm"
             onClick={handleNextPage}
-            disabled={
-              !evaluationsData.oldestCreatedAt || evaluations.length <= 10
-            }
+            disabled={!evaluationsData.oldestCreatedAt || evaluations.length <= 10}
           >
             Next
             <ChevronRight className="h-4 w-4" />
