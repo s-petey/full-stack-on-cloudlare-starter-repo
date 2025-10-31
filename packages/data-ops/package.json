@@ -8,9 +8,11 @@
     "migrate": "drizzle-kit migrate --config drizzle.config.ts",
     "generate": "drizzle-kit generate --config drizzle.config.ts",
     "studio": "drizzle-kit studio --config drizzle.config.ts",
-    "better-auth-generate": "npx @better-auth/cli generate --config auth-gen/auth.ts"
+    "better-auth-generate": "npx @better-auth/cli generate --config auth-gen/auth.ts",
+    "check": "tsc --project tsconfig.json"
   },
   "exports": {
+    "./package.json": "./package.json",
     "./database": {
       "types": "./dist/db/database.d.ts",
       "default": "./dist/db/database.js"

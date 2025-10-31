@@ -1,29 +1,30 @@
 {
+  "extends": "../../tsconfig.options.json",
   "include": ["**/*.ts", "**/*.tsx"],
+
   "compilerOptions": {
-    "target": "ES2022",
-    "jsx": "react-jsx",
-    "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": false,
-    "noEmit": true,
-
-    /* Linting */
-    "skipLibCheck": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
       "@/worker/*": ["./worker/*"],
       "@/*": ["./src/*"]
+    },
+
+    "types": ["vite/client"],
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "emitDeclarationOnly": false,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": false,
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    "noEmit": true
+  },
+  "references": [
+    {
+      "path": "../../packages/data-ops"
     }
-  }
+  ]
 }

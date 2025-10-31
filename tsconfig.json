@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.options.json",
+  "files": [],
+  "references": [
+    {
+      "path": "apps/data-service"
+    },
+    {
+      "path": "apps/user-application"
+    },
+    {
+      "path": "packages/data-ops"
+    },
+  ]
+}
