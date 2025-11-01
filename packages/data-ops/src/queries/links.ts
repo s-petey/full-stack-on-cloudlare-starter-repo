@@ -83,6 +83,27 @@ export async function getLink(linkId: LinkSchemaType['linkId'], accountId: LinkS
   return parsed;
 }
 
+export async function getLinkDestinations(linkId: LinkSchemaType['linkId']) {
+  const db = getDb();
+
+  const result = await db
+    .select({
+      destinations: links.destinations,
+    })
+    .from(links)
+    .where(eq(links.linkId, linkId))
+    .limit(1);
+
+  const firstResult = result.at(0);
+
+  if (!firstResult) {
+    return null;
+  }
+
+  const parsed = linkSchema.shape.destinations.parse(JSON.parse(firstResult.destinations));
+  return parsed;
+}
+
 export async function updateLinkDestinations(
   { linkId, destinations }: { linkId: string; destinations: LinkSchemaType['destinations'] },
   accountId: LinkSchemaType['accountId'],
