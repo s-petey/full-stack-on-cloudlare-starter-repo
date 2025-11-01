@@ -19,4 +19,13 @@
       "migrations_dir": "../../packages/data-ops/src/drizzle-out",
     },
   ],
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "47b822af485940bba1155b399980dfd8",
+
+      // Optional: preview_id used when running `wrangler dev` for local dev
+      "preview_id": "smart-links-cache-dev",
+    },
+  ],
 }

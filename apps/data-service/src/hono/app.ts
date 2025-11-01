@@ -1,4 +1,4 @@
-import { getDestinationForCountry } from '@/helpers/route-ops';
+import { getDestinationForCountry, getRoutingDestination } from '@/helpers/route-ops';
 import { getLinkDestinations } from '@repo/data-ops/queries/links';
 import { cloudflareInfoSchema } from '@repo/data-ops/zod-schema/links';
 import { Hono } from 'hono';
@@ -27,22 +27,18 @@ App.get(
     // const json = c.req.valid('json');
     // const form = c.req.valid('form');
 
-    const link = await getLinkDestinations(validParam);
-
-    if (link === null) {
-      return c.json({ error: 'Link not found' }, 404);
-    }
-
     const cfInfo = cloudflareInfoSchema.safeParse(c.req.raw.cf);
 
-    if (!cfInfo.success) {
-      // TODO: Replace with default routing...
-      return c.text('Invalid Cloudflare info', 400);
+    let country: string | undefined = undefined;
+    if (cfInfo.success) {
+      country = cfInfo.data.country;
     }
 
-    const { country, latitude, longitude } = cfInfo.data;
+    const routingPath = await getRoutingDestination(c.env, validParam, country);
 
-    const routingPath = getDestinationForCountry(link, country);
+    if (routingPath === null) {
+      return c.json({ error: 'Link not found' }, 404);
+    }
 
     return c.redirect(routingPath);
   },
