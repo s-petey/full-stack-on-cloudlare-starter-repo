@@ -13,7 +13,17 @@ export default defineConfig({
       '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
     },
   },
-  plugins: [tsConfigPaths(), tanstackRouter({ autoCodeSplitting: true }), viteReact(), tailwindcss(), cloudflare()],
+  plugins: [
+    tsConfigPaths(),
+    tanstackRouter({ autoCodeSplitting: true }),
+    viteReact(),
+    tailwindcss(),
+    cloudflare({
+      persistState: {
+        path: '../../.wrangler/state',
+      },
+    }),
+  ],
   server: {
     watch: {
       ignored: ['**/.wrangler/state/**'],

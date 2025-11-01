@@ -11,4 +11,12 @@
   "observability": {
     "enabled": true,
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "smart-links-stage",
+      "database_id": "dfb81113-5590-4391-bdd4-5a995fd49863",
+      "migrations_dir": "../../packages/data-ops/src/drizzle-out",
+    },
+  ],
 }
