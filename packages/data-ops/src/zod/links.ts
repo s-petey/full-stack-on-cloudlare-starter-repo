@@ -34,26 +34,20 @@ export const createLinkSchema = linkSchema.omit({
 
 export const cloudflareInfoSchema = z.object({
   country: z.string().optional(),
-  latitude: z
-    .string()
-    .transform((val) => (val ? Number(val) : undefined))
-    .optional(),
-  longitude: z
-    .string()
-    .transform((val) => (val ? Number(val) : undefined))
-    .optional(),
+  latitude: z.coerce.number().optional(),
+  longitude: z.coerce.number().optional(),
 });
 
-export const durableObjectGeoClickSchama = z.object({
+export const durableObjectGeoClickSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
   time: z.number(),
   country: z.string(),
 });
 
-export const durableObjectGeoClickArraySchema = z.array(durableObjectGeoClickSchama);
+export const durableObjectGeoClickArraySchema = z.array(durableObjectGeoClickSchema);
 
-export type DurableObjectGeoClickSchemaType = z.infer<typeof durableObjectGeoClickSchama>;
+export type DurableObjectGeoClickSchemaType = z.infer<typeof durableObjectGeoClickSchema>;
 
 export type CloudflareInfoSchemaType = z.infer<typeof cloudflareInfoSchema>;
 
