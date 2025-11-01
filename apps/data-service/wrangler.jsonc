@@ -32,7 +32,11 @@
     "consumers": [
       {
         "queue": "smart-links-data-queue-stage",
-        "max_retries": 3,
+        "dead_letter_queue": "smart-links-dead-letter-queue-stage",
+      },
+      {
+        "queue": "smart-links-dead-letter-queue-stage",
+        "max_retries": 0,
       },
     ],
     "producers": [

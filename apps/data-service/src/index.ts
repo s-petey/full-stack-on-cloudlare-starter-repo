@@ -16,6 +16,15 @@ export default class DataService extends WorkerEntrypoint<Env> {
   }
 
   async queue(batch: MessageBatch<unknown>) {
+    // If I want to check which queue it is on...
+    const isDataQueue = batch.queue === 'smart-links-data-queue-stage';
+    const isDeadLetterQueue = batch.queue === 'smart-links-dead-letter-queue-stage';
+
+    if (!isDataQueue && !isDeadLetterQueue) {
+      console.error('Received message from unknown queue:', batch.queue);
+      return;
+    }
+
     for (const message of batch.messages) {
       const result = LinkClickMessageSchema.safeParse(message.body);
       if (!result.success) {
