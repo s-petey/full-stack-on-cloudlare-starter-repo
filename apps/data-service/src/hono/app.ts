@@ -1,6 +1,6 @@
-import { getDestinationForCountry, getRoutingDestination } from '@/helpers/route-ops';
-import { getLinkDestinations } from '@repo/data-ops/queries/links';
+import { getRoutingDestination } from '@/helpers/route-ops';
 import { cloudflareInfoSchema } from '@repo/data-ops/zod-schema/links';
+import { LinkClickMessageSchema, LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
 import { Hono } from 'hono';
 import z from 'zod';
 
@@ -39,6 +39,21 @@ App.get(
     if (routingPath === null) {
       return c.json({ error: 'Link not found' }, 404);
     }
+
+    const queueMessage: LinkClickMessageType = {
+      data: {
+        country,
+        latitude: cfInfo.data?.latitude,
+        longitude: cfInfo.data?.longitude,
+        destination: routingPath,
+        id: validParam,
+        timestamp: new Date(),
+      },
+      type: 'LINK_CLICK',
+    };
+
+    // Let CF handle sending this before the worker closes.
+    c.executionCtx.waitUntil(c.env.QUEUE.send(LinkClickMessageSchema.encode(queueMessage)));
 
     return c.redirect(routingPath);
   },

@@ -9,7 +9,7 @@
     "serve": "vite preview",
     "test": "vitest run",
     "cf-typegen": "wrangler types --env-interface Env",
-    "cf-migrate": "wrangler d1 migrations apply --local smart-links-stage",
+    "cf-migrate": "wrangler d1 migrations apply --local smart-links-stage --persist-to ../../.wrangler/state",
     "deploy": "npm run build && wrangler deploy",
     "check": "tsc --project tsconfig.json",
     "fix": "prettier --write ."

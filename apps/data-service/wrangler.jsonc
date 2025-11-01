@@ -28,4 +28,18 @@
       "preview_id": "smart-links-cache-dev",
     },
   ],
+  "queues": {
+    "consumers": [
+      {
+        "queue": "smart-links-data-queue-stage",
+        "max_retries": 3,
+      },
+    ],
+    "producers": [
+      {
+        "binding": "QUEUE",
+        "queue": "smart-links-data-queue-stage",
+      },
+    ],
+  },
 }

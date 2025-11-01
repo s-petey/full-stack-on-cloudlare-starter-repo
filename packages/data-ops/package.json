@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "pull": "drizzle-kit pull --config drizzle.config.ts",
-    "migrate": "drizzle-kit migrate --config drizzle.config.ts",
+    "migrate": "echo 'this does nothing as we rely on wrangler d1 migrations'",
     "generate": "drizzle-kit generate --config drizzle.config.ts",
     "studio": "drizzle-kit studio --config drizzle.config.ts",
     "better-auth-generate": "npx @better-auth/cli generate --config auth-gen/auth.ts",
