@@ -1,5 +1,6 @@
 import { sqliteTable, AnySQLiteColumn, text, numeric, index, real } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
+import { evaluationProductStatus } from '@/zod/links';
 
 export const links = sqliteTable('links', {
   linkId: text('link_id').primaryKey().notNull(),
@@ -34,7 +35,13 @@ export const destinationEvaluations = sqliteTable(
     linkId: text('link_id').notNull(),
     accountId: text('account_id').notNull(),
     destinationUrl: text('destination_url').notNull(),
-    status: text().notNull(),
+    status: text({
+      enum: [
+        evaluationProductStatus.enum.AVAILABLE_PRODUCT,
+        evaluationProductStatus.enum.NOT_AVAILABLE_PRODUCT,
+        evaluationProductStatus.enum.UNKNOWN_STATUS,
+      ],
+    }).notNull(),
     reason: text().notNull(),
     createdAt: numeric('created_at')
       .default(sql`(CURRENT_TIMESTAMP)`)

@@ -1,6 +1,8 @@
 import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
 import { collectDestinationInfo } from '@/helpers/browser-render';
 import { aiDestinationChecker } from '@/helpers/ai-destination-checker';
+import { addEvaluation } from '@repo/data-ops/queries/evaluations';
+import { initDatabase } from '@repo/data-ops/database';
 
 // TODO: Should this be zod instead?
 interface DestinationStatusEvaluationParams {
@@ -11,6 +13,9 @@ interface DestinationStatusEvaluationParams {
 
 export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, DestinationStatusEvaluationParams> {
   async run(event: Readonly<WorkflowEvent<DestinationStatusEvaluationParams>>, step: WorkflowStep) {
+    // Is this better here or in the constructor?
+    initDatabase(this.env.DB);
+
     const collectedData = await step.do('Collect rendered destination page data', async () => {
       return collectDestinationInfo(this.env, event.payload.destinationUrl);
     });
@@ -27,6 +32,23 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
         return await aiDestinationChecker(this.env, collectedData.markdown);
       },
     );
+
+    const evaluationId = await step.do('Save evaluation in database', async () => {
+      return await addEvaluation({
+        linkId: event.payload.linkId,
+        status: aiStatus.status,
+        reason: aiStatus.statusReason,
+        accountId: event.payload.accountId,
+        destinationUrl: event.payload.destinationUrl,
+      });
+    });
+
+    await step.do('Backup destination web page in R2', async () => {
+      const accountId = event.payload.accountId;
+      const r2PathHtml = `evaluations/${accountId}/${evaluationId}.html`;
+      const r2PathMarkdown = `evaluations/${accountId}/${evaluationId}.md`;
+      await Promise.all([this.env.BUCKET.put(r2PathHtml, collectedData.html), this.env.BUCKET.put(r2PathMarkdown, collectedData.markdown)]);
+    });
 
     console.log(collectedData);
   }
