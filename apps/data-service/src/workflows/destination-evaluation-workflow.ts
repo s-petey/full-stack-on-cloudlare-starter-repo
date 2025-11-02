@@ -16,8 +16,26 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
     // Is this better here or in the constructor?
     initDatabase(this.env.DB);
 
-    const collectedData = await step.do('Collect rendered destination page data', async () => {
-      return collectDestinationInfo(this.env, event.payload.destinationUrl);
+    const collectionData = await step.do('Collect rendered destination page data and store in R2', async () => {
+      const collectedData = await collectDestinationInfo(this.env, event.payload.destinationUrl);
+
+      const evaluationId = crypto.randomUUID();
+      const accountId = event.payload.accountId;
+      const pathPrefix = `evaluations/${accountId}/${evaluationId}/`;
+      const r2PathHtml = `${pathPrefix}.html`;
+      const r2PathScreenshot = `${pathPrefix}.png`;
+      const r2PathMarkdown = `${pathPrefix}.md`;
+
+      await Promise.all([
+        this.env.BUCKET.put(r2PathHtml, collectedData.html),
+        this.env.BUCKET.put(r2PathMarkdown, collectedData.markdown),
+        this.env.BUCKET.put(r2PathScreenshot, collectedData.screenshotDataBuffer),
+      ]);
+
+      return {
+        markdown: collectedData.markdown,
+        evaluationId,
+      };
     });
 
     const aiStatus = await step.do(
@@ -29,12 +47,13 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
         },
       },
       async () => {
-        return await aiDestinationChecker(this.env, collectedData.markdown);
+        return await aiDestinationChecker(this.env, collectionData.markdown);
       },
     );
 
-    const evaluationId = await step.do('Save evaluation in database', async () => {
+    await step.do('Save evaluation in database', async () => {
       return await addEvaluation({
+        evaluationId: collectionData.evaluationId,
         linkId: event.payload.linkId,
         status: aiStatus.status,
         reason: aiStatus.statusReason,
@@ -42,14 +61,5 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
         destinationUrl: event.payload.destinationUrl,
       });
     });
-
-    await step.do('Backup destination web page in R2', async () => {
-      const accountId = event.payload.accountId;
-      const r2PathHtml = `evaluations/${accountId}/${evaluationId}.html`;
-      const r2PathMarkdown = `evaluations/${accountId}/${evaluationId}.md`;
-      await Promise.all([this.env.BUCKET.put(r2PathHtml, collectedData.html), this.env.BUCKET.put(r2PathMarkdown, collectedData.markdown)]);
-    });
-
-    console.log(collectedData);
   }
 }

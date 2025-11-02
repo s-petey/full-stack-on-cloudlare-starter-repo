@@ -3,7 +3,9 @@ import { destinationEvaluations } from '@/drizzle-out/schema';
 import type { EvaluationProductStatusType } from '@/zod/links';
 import { and, desc, eq, gt } from 'drizzle-orm';
 
+// TODO: Zod or no?
 interface AddEvaluationParams {
+  evaluationId: string;
   linkId: string;
   accountId: string;
   destinationUrl: string;
@@ -13,16 +15,14 @@ interface AddEvaluationParams {
 
 export async function addEvaluation(data: AddEvaluationParams) {
   const db = getDb();
-  const id = crypto.randomUUID();
   await db.insert(destinationEvaluations).values({
-    id: id,
+    id: data.evaluationId,
     linkId: data.linkId,
     accountId: data.accountId,
     destinationUrl: data.destinationUrl,
     status: data.status,
     reason: data.reason,
   });
-  return id;
 }
 
 export async function getNotAvailableEvaluations(accountId: string) {
