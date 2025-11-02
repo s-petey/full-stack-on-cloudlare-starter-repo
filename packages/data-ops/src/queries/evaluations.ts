@@ -1,7 +1,6 @@
 import { getDb } from '@/db/database';
 import { destinationEvaluations } from '@/drizzle-out/schema';
 import type { EvaluationProductStatusType } from '@/zod/links';
-import { crypto } from '@cloudflare/workers-types';
 import { and, desc, eq, gt } from 'drizzle-orm';
 
 interface AddEvaluationParams {
