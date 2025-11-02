@@ -1,13 +1,17 @@
 import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
+import { collectDestinationInfo } from '@/helpers/browser-render';
 
-export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, unknown> {
-  async run(event: Readonly<WorkflowEvent<unknown>>, step: WorkflowStep) {
+// TODO: Should this be zod instead?
+interface DestinationStatusEvaluationParams {
+  linkId: string;
+  destinationUrl: string;
+  accountId: string;
+}
+
+export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, DestinationStatusEvaluationParams> {
+  async run(event: Readonly<WorkflowEvent<DestinationStatusEvaluationParams>>, step: WorkflowStep) {
     const collectedData = await step.do('Collect rendered destination page data', async () => {
-      console.log('Collecting rendered destination page data');
-      return {
-        dummydata: 'dummydata',
-        url: 'url' in event.payload && typeof event.payload.url === 'string' ? event.payload.url : 'unknown',
-      };
+      return collectDestinationInfo(this.env, event.payload.destinationUrl);
     });
     console.log(collectedData);
   }
