@@ -1,4 +1,5 @@
 import puppeteer from '@cloudflare/puppeteer';
+import { htmlToMarkdown } from 'webforai';
 
 /**
  * @throws If the page is not found...
@@ -13,9 +14,8 @@ export async function collectDestinationInfo(env: Env, destinationUrl: string) {
   const response = await page.goto(destinationUrl);
   await page.waitForNetworkIdle();
 
-  // TODO: Why do we need body text and the HTML? -- instead should we get it as markdown? using (webforai) or other package?
-  // const bodyText = await page.$eval('body', (el) => el.innerText);
   const html = await page.content();
+  const markdown = htmlToMarkdown(html, { baseUrl: destinationUrl });
 
   const status = response ? response.status() : 404;
 
@@ -28,7 +28,7 @@ export async function collectDestinationInfo(env: Env, destinationUrl: string) {
 
   await browser.close();
   return {
-    // bodyText,
+    markdown,
     html,
     status,
   };

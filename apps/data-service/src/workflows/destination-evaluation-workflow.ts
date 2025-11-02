@@ -1,5 +1,6 @@
 import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
 import { collectDestinationInfo } from '@/helpers/browser-render';
+import { aiDestinationChecker } from '@/helpers/ai-destination-checker';
 
 // TODO: Should this be zod instead?
 interface DestinationStatusEvaluationParams {
@@ -13,6 +14,20 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
     const collectedData = await step.do('Collect rendered destination page data', async () => {
       return collectDestinationInfo(this.env, event.payload.destinationUrl);
     });
+
+    const aiStatus = await step.do(
+      'Use AI to check status of page',
+      {
+        retries: {
+          limit: 0,
+          delay: 0,
+        },
+      },
+      async () => {
+        return await aiDestinationChecker(this.env, collectedData.markdown);
+      },
+    );
+
     console.log(collectedData);
   }
 }
