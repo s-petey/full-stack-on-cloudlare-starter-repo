@@ -21,7 +21,7 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
 
       const evaluationId = crypto.randomUUID();
       const accountId = event.payload.accountId;
-      const pathPrefix = `evaluations/${accountId}/${evaluationId}/`;
+      const pathPrefix = `evaluations/${accountId}/${evaluationId}`;
       const r2PathHtml = `${pathPrefix}.html`;
       const r2PathScreenshot = `${pathPrefix}.png`;
       const r2PathMarkdown = `${pathPrefix}.md`;

@@ -59,15 +59,4 @@ App.get(
   },
 );
 
-App.get('/do/:name', async (c) => {
-  const name = c.req.param('name');
-  const doId = c.env.EVALUATION_SCHEDULER.idFromName(name);
-  const stub = c.env.EVALUATION_SCHEDULER.get(doId);
-
-  await stub.increment();
-  const count = await stub.getCount();
-
-  return c.json({ count });
-});
-
 export { App };

@@ -34,7 +34,7 @@ export default class DataService extends WorkerEntrypoint<Env> {
 
       switch (result.data.type) {
         case 'LINK_CLICK':
-          await handleLinkClick(result.data);
+          await handleLinkClick(this.env, result.data);
           break;
         default:
           console.error('Unknown message type:', result.data.type);
