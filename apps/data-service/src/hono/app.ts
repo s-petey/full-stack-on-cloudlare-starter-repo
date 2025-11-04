@@ -1,6 +1,6 @@
-import { getRoutingDestination } from '@/helpers/route-ops';
+import { captureLinkClickInBackground, getRoutingDestination } from '@/helpers/route-ops';
 import { cloudflareInfoSchema } from '@repo/data-ops/zod-schema/links';
-import { LinkClickMessageSchema, LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
+import { LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
 import { Hono } from 'hono';
 import z from 'zod';
 
@@ -53,10 +53,19 @@ App.get(
     };
 
     // Let CF handle sending this before the worker closes.
-    c.executionCtx.waitUntil(c.env.QUEUE.send(LinkClickMessageSchema.encode(queueMessage)));
+    c.executionCtx.waitUntil(captureLinkClickInBackground(c.env, queueMessage));
 
     return c.redirect(routingPath);
   },
 );
+
+App.get('/click/:linkId', async (c) => {
+  const linkId = c.req.param('linkId');
+
+  const doId = c.env.LINK_CLICK_TRACKER_OBJECT.idFromName(linkId);
+  const stub = c.env.LINK_CLICK_TRACKER_OBJECT.get(doId);
+
+  return stub.getLinkClicks(c.req.raw);
+});
 
 export { App };

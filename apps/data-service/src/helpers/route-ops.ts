@@ -1,6 +1,6 @@
 import { getLinkDestinations } from '@repo/data-ops/queries/links';
 import { destinationsSchema, linkSchema, type LinkSchemaType } from '@repo/data-ops/zod-schema/links';
-import { LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
+import { LinkClickMessageSchema, LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
 import { env } from 'process';
 
 const TTL_ONE_DAY = 60 * 60 * 24;
@@ -65,7 +65,25 @@ export async function getRoutingDestination(env: Env, id: LinkSchemaType['linkId
 }
 
 export async function scheduleEvalWorkflow(env: Env, linkInfo: LinkClickMessageType['data']) {
-  const doId = env.EVALUATION_SCHEDULER.idFromName(`${linkInfo.id}:${linkInfo.destination}`);
-  const stub = env.EVALUATION_SCHEDULER.get(doId);
+  const doId = env.EVALUATION_SCHEDULER_OBJECT.idFromName(`${linkInfo.id}:${linkInfo.destination}`);
+  const stub = env.EVALUATION_SCHEDULER_OBJECT.get(doId);
   await stub.collectLinkClick(linkInfo.id, linkInfo.id, linkInfo.destination, linkInfo.country || 'UNKNOWN');
+}
+
+export async function captureLinkClickInBackground(env: Env, message: LinkClickMessageType) {
+  await env.QUEUE.send(LinkClickMessageSchema.encode(message));
+
+  // TODO: Should we really log this?
+  if (!message.data.latitude || !message.data.longitude || !message.data.country) return;
+
+  // TODO: Should this really use accountId?
+  // const doId = env.LINK_CLICK_TRACKER_OBJECT.idFromName(message.data.accountId);
+  const doId = env.LINK_CLICK_TRACKER_OBJECT.idFromName(message.data.id);
+  const stub = env.LINK_CLICK_TRACKER_OBJECT.get(doId);
+  await stub.addClick({
+    latitude: message.data.latitude,
+    longitude: message.data.longitude,
+    country: message.data.country,
+    time: Date.now(),
+  });
 }
