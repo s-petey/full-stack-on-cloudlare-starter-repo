@@ -22,4 +22,10 @@
       "migrations_dir": "../../packages/data-ops/src/drizzle-out",
     },
   ],
+  "services": [
+    {
+      "binding": "BACKEND_SERVICE",
+      "service": "data-service",
+    },
+  ],
 }

@@ -8,6 +8,21 @@ const App = new Hono<{ Bindings: Env }>();
 
 const stringSchema = z.string().min(1);
 
+App.get('/click-socket', async (c) => {
+  const upgradeHeader = c.req.header('Upgrade');
+  if (!upgradeHeader || upgradeHeader !== 'websocket') {
+    return c.text('Expected Upgrade: websocket', 426);
+  }
+
+  // TODO: Manage auth?
+  const accountId = c.req.header('account-id');
+
+  if (!accountId) return c.text('No Headers', 404);
+  const doId = c.env.LINK_CLICK_TRACKER_OBJECT.idFromName('hhJpSiYufu');
+  const stub = c.env.LINK_CLICK_TRACKER_OBJECT.get(doId);
+  return await stub.fetch(c.req.raw);
+});
+
 App.get(
   '/:id',
   // zValidator(
