@@ -51,7 +51,6 @@ export function GeoRoutingToggle({ destinations, linkId, setGeoToggle, geoToggle
   };
 
   const handleToggle = (checked: boolean) => {
-    console.log('hi', checked);
     if (checked) {
       // Enable geo routing
       setGeoToggle(true);
