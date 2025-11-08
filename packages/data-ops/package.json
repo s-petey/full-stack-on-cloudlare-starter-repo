@@ -13,21 +13,12 @@
     "fix": "prettier --write ."
   },
   "exports": {
-    "./database": {
-      "import": "./src/db/database.ts"
-    },
-    "./queries/*": {
-      "import": "./src/queries/*.ts"
-    },
-    "./zod-schema/*": {
-      "import": "./src/zod/*.ts"
-    },
-    "./durable-objects-helpers": {
-      "import": "./src/durable-objects-helpers/index.ts"
-    },
-    "./auth": {
-      "import": "./src/better-auth/auth.ts"
-    }
+    "./database": "./src/db/database.ts",
+    "./queries/*": "./src/queries/*.ts",
+    "./zod-schema/*": "./src/zod/*.ts",
+    "./durable-objects-helpers": "./src/durable-objects-helpers/index.ts",
+    "./auth": "./src/better-auth/auth.ts",
+    "./package.json": "./package.json"
   },
   "keywords": [],
   "author": "",

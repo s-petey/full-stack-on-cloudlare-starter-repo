@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite --port 3000 --mode development",
     "start": "vite --port 3000",
+    "production:build": "vite build --mode production && tsc",
     "build": "vite build && tsc",
     "serve": "vite preview",
     "test": "vitest run",
@@ -12,7 +13,7 @@
     "cf-typegen": "wrangler types --env-interface Env",
     "cf-migrate": "wrangler d1 migrations apply --local smart-links-stage --persist-to ../../.wrangler/state",
     "stage:deploy": "npm run build && wrangler deploy",
-    "deploy": "npm run build && wrangler deploy",
+    "production:deploy": "npm run production:build && wrangler deploy",
     "check": "tsc --project tsconfig.json",
     "fix": "prettier --write ."
   },
