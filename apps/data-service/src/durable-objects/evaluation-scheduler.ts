@@ -2,7 +2,6 @@ import { DurableObject } from 'cloudflare:workers';
 
 // TODO: Should this be zodified?
 interface ClickData {
-  accountId: string;
   linkId: string;
   destinationUrl: string;
   destinationCountryCode: string;
@@ -21,9 +20,8 @@ export class EvaluationScheduler extends DurableObject<Env> {
     });
   }
 
-  async collectLinkClick(accountId: string, linkId: string, destinationUrl: string, destinationCountryCode: string) {
+  async collectLinkClick(linkId: string, destinationUrl: string, destinationCountryCode: string) {
     this.clickData = {
-      accountId,
       linkId,
       destinationUrl,
       destinationCountryCode,
@@ -48,7 +46,6 @@ export class EvaluationScheduler extends DurableObject<Env> {
     await this.env.DESTINATION_EVALUATION_WORKFLOW.create({
       params: {
         linkId: clickData.linkId,
-        accountId: clickData.accountId,
         destinationUrl: clickData.destinationUrl,
       },
     });

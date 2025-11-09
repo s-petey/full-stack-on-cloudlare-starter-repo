@@ -1,14 +1,14 @@
-import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
-import { collectDestinationInfo } from '@/helpers/browser-render';
 import { aiDestinationChecker } from '@/helpers/ai-destination-checker';
-import { addEvaluation } from '@repo/data-ops/queries/evaluations';
+import { collectDestinationInfo } from '@/helpers/browser-render';
 import { initDatabase } from '@repo/data-ops/database';
+import { addEvaluation } from '@repo/data-ops/queries/evaluations';
+import { getLinkById } from '@repo/data-ops/queries/links';
+import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
 
 // TODO: Should this be zod instead?
 interface DestinationStatusEvaluationParams {
   linkId: string;
   destinationUrl: string;
-  accountId: string;
 }
 
 export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, DestinationStatusEvaluationParams> {
@@ -17,10 +17,13 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
     initDatabase(this.env.DB);
 
     const collectionData = await step.do('Collect rendered destination page data and store in R2', async () => {
-      const collectedData = await collectDestinationInfo(this.env, event.payload.destinationUrl);
+      const [collectedData, link] = await Promise.all([
+        collectDestinationInfo(this.env, event.payload.destinationUrl),
+        getLinkById(event.payload.linkId),
+      ]);
 
       const evaluationId = crypto.randomUUID();
-      const accountId = event.payload.accountId;
+      const accountId = link.accountId;
       const pathPrefix = `evaluations/${accountId}/${evaluationId}`;
       const r2PathHtml = `${pathPrefix}.html`;
       const r2PathScreenshot = `${pathPrefix}.png`;
@@ -35,6 +38,7 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
       return {
         markdown: collectedData.markdown,
         evaluationId,
+        accountId,
       };
     });
 
@@ -57,7 +61,7 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
         linkId: event.payload.linkId,
         status: aiStatus.status,
         reason: aiStatus.statusReason,
-        accountId: event.payload.accountId,
+        accountId: collectionData.accountId,
         destinationUrl: event.payload.destinationUrl,
       });
     });
