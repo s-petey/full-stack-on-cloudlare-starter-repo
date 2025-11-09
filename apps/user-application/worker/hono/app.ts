@@ -1,11 +1,20 @@
-import { Hono } from 'hono';
-import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import { appRouter } from '@/worker/trpc/router';
 import { createContext } from '@/worker/trpc/context';
+import { appRouter } from '@/worker/trpc/router';
+import { getAuth } from '@repo/data-ops/auth';
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
+import { Hono } from 'hono';
 
 // TODO: Why do we have both trpc and hono?
 
 export const App = new Hono<{ Bindings: ServiceBindings }>();
+
+App.on(['POST', 'GET'], '/api/auth/*', (c) => {
+  const auth = getAuth({
+    clientId: c.env.GOOGLE_CLIENT_ID,
+    clientSecret: c.env.GOOGLE_CLIENT_SECRET,
+  });
+  return auth.handler(c.req.raw);
+});
 
 App.get('/click-socket', async (c) => {
   const headers = new Headers(c.req.raw.headers);

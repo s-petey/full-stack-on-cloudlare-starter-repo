@@ -17,7 +17,7 @@
     "./queries/*": "./src/queries/*.ts",
     "./zod-schema/*": "./src/zod/*.ts",
     "./durable-objects-helpers": "./src/durable-objects-helpers/index.ts",
-    "./auth": "./src/better-auth/auth.ts",
+    "./auth": "./src/auth.ts",
     "./package.json": "./package.json"
   },
   "keywords": [],
