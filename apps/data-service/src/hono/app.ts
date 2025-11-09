@@ -24,7 +24,7 @@ App.get('/click-socket', async (c) => {
 });
 
 App.get(
-  '/:id',
+  '/r/:id',
   // zValidator(
   //   'json',
   //   //
