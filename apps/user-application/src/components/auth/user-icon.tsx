@@ -1,32 +1,22 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, User } from "lucide-react";
-import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { LogOut, User } from 'lucide-react';
+import { useState } from 'react';
 
 // Mock authClient with dummy data
 const authClient = {
   useSession: () => ({
     data: {
       user: {
-        name: "John Doe",
-        email: "john.doe@example.com",
-        image: "https://github.com/shadcn.png",
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        image: 'https://github.com/shadcn.png',
       },
     },
     isPending: false,
   }),
-  signOut: async ({
-    fetchOptions,
-  }: {
-    fetchOptions: { onSuccess: () => void };
-  }) => {
+  signOut: async ({ fetchOptions }: { fetchOptions: { onSuccess: () => void } }) => {
     // Simulate async operation
     await new Promise((resolve) => setTimeout(resolve, 1000));
     fetchOptions.onSuccess();
@@ -34,7 +24,7 @@ const authClient = {
 };
 
 type UserProfilePopupProps = {
-  data: Awaited<ReturnType<typeof authClient.useSession>>["data"];
+  data: Awaited<ReturnType<typeof authClient.useSession>>['data'];
   children: React.ReactNode;
 };
 
@@ -60,29 +50,12 @@ function UserProfilePopup({ data, children }: UserProfilePopupProps) {
         <DialogHeader className="text-center space-y-4">
           <div className="flex flex-col items-center space-y-2">
             <Avatar className="h-16 w-16">
-              {data?.user.image && (
-                <AvatarImage
-                  src={data.user.image}
-                  alt={data.user.name || "User"}
-                />
-              )}
-              <AvatarFallback>
-                {data?.user.name ? (
-                  data.user.name.charAt(0).toUpperCase()
-                ) : (
-                  <User className="h-8 w-8" />
-                )}
-              </AvatarFallback>
+              {data?.user.image && <AvatarImage src={data.user.image} alt={data.user.name || 'User'} />}
+              <AvatarFallback>{data?.user.name ? data.user.name.charAt(0).toUpperCase() : <User className="h-8 w-8" />}</AvatarFallback>
             </Avatar>
             <div>
-              <DialogTitle className="text-xl font-semibold">
-                {data?.user.name || "User"}
-              </DialogTitle>
-              {data?.user.email && (
-                <p className="text-sm text-muted-foreground">
-                  {data.user.email}
-                </p>
-              )}
+              <DialogTitle className="text-xl font-semibold">{data?.user.name || 'User'}</DialogTitle>
+              {data?.user.email && <p className="text-sm text-muted-foreground">{data.user.email}</p>}
             </div>
           </div>
         </DialogHeader>
@@ -127,16 +100,8 @@ export function UserCircle() {
     <UserProfilePopup data={user}>
       <Button variant="ghost" className="relative h-8 w-8 rounded-full">
         <Avatar className="h-8 w-8">
-          {user.user.image && (
-            <AvatarImage src={user.user.image} alt={user.user.name || "User"} />
-          )}
-          <AvatarFallback>
-            {user.user.name ? (
-              user.user.name.charAt(0).toUpperCase()
-            ) : (
-              <User className="h-4 w-4" />
-            )}
-          </AvatarFallback>
+          {user.user.image && <AvatarImage src={user.user.image} alt={user.user.name || 'User'} />}
+          <AvatarFallback>{user.user.name ? user.user.name.charAt(0).toUpperCase() : <User className="h-4 w-4" />}</AvatarFallback>
         </Avatar>
       </Button>
     </UserProfilePopup>
@@ -164,31 +129,14 @@ export function UserTab() {
 
   return (
     <UserProfilePopup data={data}>
-      <Button
-        variant="ghost"
-        className="flex items-center gap-3 p-2 w-full justify-start"
-      >
+      <Button variant="ghost" className="flex items-center gap-3 p-2 w-full justify-start">
         <Avatar className="h-8 w-8">
-          {data.user.image && (
-            <AvatarImage src={data.user.image} alt={data.user.name || "User"} />
-          )}
-          <AvatarFallback>
-            {data.user.name ? (
-              data.user.name.charAt(0).toUpperCase()
-            ) : (
-              <User className="h-4 w-4" />
-            )}
-          </AvatarFallback>
+          {data.user.image && <AvatarImage src={data.user.image} alt={data.user.name || 'User'} />}
+          <AvatarFallback>{data.user.name ? data.user.name.charAt(0).toUpperCase() : <User className="h-4 w-4" />}</AvatarFallback>
         </Avatar>
         <div className="flex flex-col text-left">
-          <span className="font-medium text-sm">
-            {data.user.name || "User"}
-          </span>
-          {data.user.email && (
-            <span className="text-xs text-muted-foreground">
-              {data.user.email}
-            </span>
-          )}
+          <span className="font-medium text-sm">{data.user.name || 'User'}</span>
+          {data.user.email && <span className="text-xs text-muted-foreground">{data.user.email}</span>}
         </div>
       </Button>
     </UserProfilePopup>

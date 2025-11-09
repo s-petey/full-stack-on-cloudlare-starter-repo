@@ -3,12 +3,168 @@
  * https://developers.cloudflare.com/workers/wrangler/configuration/
  */
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "data-service",
-	"main": "src/index.ts",
-	"compatibility_date": "2025-06-17",
-	"compatibility_flags": ["nodejs_compat"],
-	"observability": {
-		"enabled": true,
-	},
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "data-service",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-06-17",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+  },
+
+  "env": {
+    "stage": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "smart-links-stage",
+          "database_id": "dfb81113-5590-4391-bdd4-5a995fd49863",
+          "migrations_dir": "../../packages/data-ops/src/drizzle-out",
+        },
+      ],
+      "kv_namespaces": [
+        {
+          "binding": "KV",
+          "id": "47b822af485940bba1155b399980dfd8",
+
+          // Optional: preview_id used when running `wrangler dev` for local dev
+          "preview_id": "smart-links-cache-dev",
+        },
+      ],
+      "queues": {
+        "consumers": [
+          {
+            "queue": "smart-links-data-queue-stage",
+            "dead_letter_queue": "smart-links-dead-letter-queue-stage",
+          },
+          {
+            "queue": "smart-links-dead-letter-queue-stage",
+            "max_retries": 0,
+          },
+        ],
+        "producers": [
+          {
+            "binding": "QUEUE",
+            "queue": "smart-links-data-queue-stage",
+          },
+        ],
+      },
+      "workflows": [
+        {
+          "binding": "DESTINATION_EVALUATION_WORKFLOW",
+          "name": "destination-evaluation-workflow",
+          "class_name": "DestinationEvaluationWorkflow",
+        },
+      ],
+      "browser": {
+        "binding": "VIRTUAL_BROWSER",
+      },
+      "ai": {
+        "binding": "AI",
+      },
+      "r2_buckets": [
+        {
+          "binding": "BUCKET",
+          "bucket_name": "smart-links-eval-stage",
+        },
+      ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "EVALUATION_SCHEDULER_OBJECT",
+            "class_name": "EvaluationScheduler",
+          },
+          {
+            "class_name": "LinkClickTracker",
+            "name": "LINK_CLICK_TRACKER_OBJECT",
+          },
+        ],
+      },
+      "migrations": [
+        {
+          "tag": "v1",
+          "new_classes": ["EvaluationScheduler"],
+        },
+        {
+          "tag": "v2",
+          "new_sqlite_classes": ["LinkClickTracker"],
+        },
+      ],
+    },
+    "production": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "smart-links-production",
+          "database_id": "3f481d86-f735-40b3-830e-863155b34479",
+          "migrations_dir": "../../packages/data-ops/src/drizzle-out",
+        },
+      ],
+      "kv_namespaces": [
+        {
+          "binding": "KV",
+          "id": "f39f39694dcf4653b075dc2522a18ac1",
+        },
+      ],
+      "queues": {
+        "consumers": [
+          {
+            "queue": "smart-links-data-queue-production",
+            "dead_letter_queue": "smart-links-dead-letter-queue-production",
+          },
+          {
+            "queue": "smart-links-dead-letter-queue-production",
+            "max_retries": 0,
+          },
+        ],
+        "producers": [
+          {
+            "binding": "QUEUE",
+            "queue": "smart-links-data-queue-production",
+          },
+        ],
+      },
+      "workflows": [
+        {
+          "binding": "DESTINATION_EVALUATION_WORKFLOW",
+          "name": "destination-evaluation-workflow-production",
+          "class_name": "DestinationEvaluationWorkflow",
+        },
+      ],
+      "browser": {
+        "binding": "VIRTUAL_BROWSER",
+      },
+      "ai": {
+        "binding": "AI",
+      },
+      "r2_buckets": [
+        {
+          "binding": "BUCKET",
+          "bucket_name": "smart-links-eval-production",
+        },
+      ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "EVALUATION_SCHEDULER_OBJECT",
+            "class_name": "EvaluationScheduler",
+          },
+          {
+            "class_name": "LinkClickTracker",
+            "name": "LINK_CLICK_TRACKER_OBJECT",
+          },
+        ],
+      },
+      "migrations": [
+        {
+          "tag": "v1",
+          "new_classes": ["EvaluationScheduler"],
+        },
+        {
+          "tag": "v2",
+          "new_sqlite_classes": ["LinkClickTracker"],
+        },
+      ],
+    },
+  },
 }

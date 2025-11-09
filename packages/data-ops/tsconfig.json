@@ -7,9 +7,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "declaration": true,
     "strict": true,
     "skipLibCheck": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
     "outDir": "./dist",
     "types": ["@cloudflare/workers-types"],
     "lib": ["ESNext"],
@@ -17,5 +18,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src/**/*", "drizzle.config.ts"]
 }

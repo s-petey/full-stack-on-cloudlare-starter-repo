@@ -14,4 +14,38 @@
   "observability": {
     "enabled": true,
   },
+  "env": {
+    "stage": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "smart-links-stage",
+          "database_id": "dfb81113-5590-4391-bdd4-5a995fd49863",
+          "migrations_dir": "../../packages/data-ops/src/drizzle-out",
+        },
+      ],
+      "services": [
+        {
+          "binding": "BACKEND_SERVICE",
+          "service": "data-service-stage",
+        },
+      ],
+    },
+    "production": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "smart-links-production",
+          "database_id": "3f481d86-f735-40b3-830e-863155b34479",
+          "migrations_dir": "../../packages/data-ops/src/drizzle-out",
+        },
+      ],
+      "services": [
+        {
+          "binding": "BACKEND_SERVICE",
+          "service": "data-service-production",
+        },
+      ],
+    },
+  },
 }

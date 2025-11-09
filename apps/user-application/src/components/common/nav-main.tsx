@@ -1,44 +1,33 @@
-import {
-  IconCirclePlusFilled,
-  IconDashboard,
-  IconLink,
-  IconReport,
-} from "@tabler/icons-react";
+import { IconCirclePlusFilled, IconDashboard, IconLink, IconReport } from '@tabler/icons-react';
 
-import {
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { useNavigate } from "@tanstack/react-router";
+import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { useNavigate } from '@tanstack/react-router';
 
 export function NavMain() {
   const nav = useNavigate();
 
   const items = [
     {
-      title: "Dashboard",
+      title: 'Dashboard',
       navigate: () =>
         nav({
-          to: "/app",
+          to: '/app',
         }),
       icon: IconDashboard,
     },
     {
-      title: "Links",
+      title: 'Links',
       navigate: () =>
         nav({
-          to: "/app/links",
+          to: '/app/links',
         }),
       icon: IconLink,
     },
     {
-      title: "Evaluations",
+      title: 'Evaluations',
       navigate: () =>
         nav({
-          to: "/app/evaluations",
+          to: '/app/evaluations',
         }),
       icon: IconReport,
     },
@@ -52,7 +41,7 @@ export function NavMain() {
             <SidebarMenuButton
               onClick={() =>
                 nav({
-                  to: "/app/create",
+                  to: '/app/create',
                 })
               }
               tooltip="Quick Create"

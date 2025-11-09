@@ -1,27 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import iso31661 from "iso-3166-1";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import iso31661 from 'iso-3166-1';
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { trpc } from "@/router";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Flag } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { trpc } from '@/router';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { Flag } from 'lucide-react';
 
 export function TopCountriesTable() {
-  const { data: clicksByCountry } = useSuspenseQuery(
-    trpc.links.clicksByCountry.queryOptions(),
-  );
+  const { data: clicksByCountry } = useSuspenseQuery(trpc.links.clicksByCountry.queryOptions());
 
-  const totalClicks = clicksByCountry.reduce(
-    (sum, item) => sum + item.count,
-    0,
-  );
+  const totalClicks = clicksByCountry.reduce((sum, item) => sum + item.count, 0);
 
   return (
     <Card className="hover:shadow-md transition-all duration-200 h-64 flex flex-col">
@@ -45,19 +33,11 @@ export function TopCountriesTable() {
               {clicksByCountry.map((country, index) => (
                 <TableRow key={index}>
                   <TableCell className="font-medium">
-                    {country.country
-                      ? iso31661.whereAlpha2(country.country)?.country ||
-                        country.country
-                      : "Unknown"}
+                    {country.country ? iso31661.whereAlpha2(country.country)?.country || country.country : 'Unknown'}
                   </TableCell>
-                  <TableCell className="text-right font-semibold">
-                    {country.count}
-                  </TableCell>
+                  <TableCell className="text-right font-semibold">{country.count}</TableCell>
                   <TableCell className="text-right text-muted-foreground">
-                    {totalClicks > 0
-                      ? Math.round((country.count / totalClicks) * 100)
-                      : 0}
-                    %
+                    {totalClicks > 0 ? Math.round((country.count / totalClicks) * 100) : 0}%
                   </TableCell>
                 </TableRow>
               ))}

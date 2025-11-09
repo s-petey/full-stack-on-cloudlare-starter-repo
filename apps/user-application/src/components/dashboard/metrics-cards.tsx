@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { trpc } from "@/router";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Activity, Link, Clock } from "lucide-react";
-import { ReactNode } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { trpc } from '@/router';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { Activity, Link, Clock } from 'lucide-react';
+import { ReactNode } from 'react';
 
 interface MetricCardProps {
   title: string;
@@ -13,14 +13,7 @@ interface MetricCardProps {
   descriptionColor?: string;
 }
 
-function MetricCard({
-  title,
-  icon,
-  value,
-  description,
-  valueFormatted = true,
-  descriptionColor,
-}: MetricCardProps) {
+function MetricCard({ title, icon, value, description, valueFormatted = true, descriptionColor }: MetricCardProps) {
   return (
     <Card className="hover:shadow-md transition-all duration-200">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -28,14 +21,8 @@ function MetricCard({
         {icon}
       </CardHeader>
       <CardContent>
-        <div className="text-4xl font-bold">
-          {valueFormatted && typeof value === "number"
-            ? value.toLocaleString()
-            : value}
-        </div>
-        <p className={`text-xs ${descriptionColor || "text-muted-foreground"}`}>
-          {description}
-        </p>
+        <div className="text-4xl font-bold">{valueFormatted && typeof value === 'number' ? value.toLocaleString() : value}</div>
+        <p className={`text-xs ${descriptionColor || 'text-muted-foreground'}`}>{description}</p>
       </CardContent>
     </Card>
   );
@@ -74,8 +61,8 @@ export function MetricsCards() {
         description={`${clicksLast24Hours.percentChange}% from yesterday`}
         descriptionColor={
           clicksLast24Hours.percentChange < 0
-            ? "text-red-600 dark:text-red-400 font-medium"
-            : "text-emerald-600 dark:text-emerald-400 font-medium"
+            ? 'text-red-600 dark:text-red-400 font-medium'
+            : 'text-emerald-600 dark:text-emerald-400 font-medium'
         }
       />
 

@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const destinationsSchema = z.preprocess(
   (obj) => {
-    if (typeof obj === "string") {
+    if (typeof obj === 'string') {
       console.log(obj);
       return JSON.parse(obj);
     }
@@ -10,12 +10,10 @@ export const destinationsSchema = z.preprocess(
   },
   z
     .object({
-      default: z.string().url(),
+      default: z.url(),
     })
-    .catchall(z.string().url()),
+    .catchall(z.url()),
 );
-
-export type DestinationsSchemaType = z.infer<typeof destinationsSchema>;
 
 export const linkSchema = z.object({
   linkId: z.string(),
@@ -34,32 +32,30 @@ export const createLinkSchema = linkSchema.omit({
 
 export const cloudflareInfoSchema = z.object({
   country: z.string().optional(),
-  latitude: z
-    .string()
-    .transform((val) => (val ? Number(val) : undefined))
-    .optional(),
-  longitude: z
-    .string()
-    .transform((val) => (val ? Number(val) : undefined))
-    .optional(),
+  latitude: z.coerce.number().optional(),
+  longitude: z.coerce.number().optional(),
 });
 
-export const durableObjectGeoClickSchama = z.object({
+export const durableObjectGeoClickSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
   time: z.number(),
   country: z.string(),
 });
 
-export const durableObjectGeoClickArraySchema = z.array(
-  durableObjectGeoClickSchama,
-);
+export const durableObjectGeoClickArraySchema = z.array(durableObjectGeoClickSchema);
 
-export type DurableObjectGeoClickSchemaType = z.infer<
-  typeof durableObjectGeoClickSchama
->;
+export const evaluationProductStatus = z.enum(['AVAILABLE_PRODUCT', 'NOT_AVAILABLE_PRODUCT', 'UNKNOWN_STATUS']).meta({
+  description: `Indicates the product's availability on the page:
+- AVAILABLE_PRODUCT: The product appears available for purchase.
+- NOT_AVAILABLE_PRODUCT: The product appears unavailable (sold out, discontinued, etc.).
+- UNKNOWN_STATUS: The status could not be determined from the text.
+`.trim(),
+});
 
+export type EvaluationProductStatusType = z.infer<typeof evaluationProductStatus>;
+export type DestinationsSchemaType = z.infer<typeof destinationsSchema>;
+export type DurableObjectGeoClickSchemaType = z.infer<typeof durableObjectGeoClickSchema>;
 export type CloudflareInfoSchemaType = z.infer<typeof cloudflareInfoSchema>;
-
 export type LinkSchemaType = z.infer<typeof linkSchema>;
 export type CreateLinkSchemaType = z.infer<typeof createLinkSchema>;

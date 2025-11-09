@@ -1,6 +1,6 @@
-import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
-import { ModeToggle } from "@/components/common/mode-toggle";
-import { UserTab } from "@/components/auth/user-icon";
+import { SidebarMenu, SidebarMenuItem } from '@/components/ui/sidebar';
+import { ModeToggle } from '@/components/common/mode-toggle';
+import { UserTab } from '@/components/auth/user-icon';
 
 export function NavUser() {
   return (

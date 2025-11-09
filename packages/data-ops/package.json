@@ -2,56 +2,42 @@
   "name": "@repo/data-ops",
   "version": "1.0.0",
   "description": "Helper methods to interface with data",
+  "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.json --outDir ./dist && tsc-alias",
     "pull": "drizzle-kit pull --config drizzle.config.ts",
-    "migrate": "drizzle-kit migrate --config drizzle.config.ts",
+    "migrate": "echo 'this does nothing as we rely on wrangler d1 migrations'",
     "generate": "drizzle-kit generate --config drizzle.config.ts",
     "studio": "drizzle-kit studio --config drizzle.config.ts",
-    "better-auth-generate": "npx @better-auth/cli generate --config auth-gen/auth.ts"
+    "better-auth-generate": "npx @better-auth/cli generate --config auth-gen/auth.ts",
+    "check": "tsc --project tsconfig.json",
+    "fix": "prettier --write ."
   },
   "exports": {
-    "./database": {
-      "types": "./dist/db/database.d.ts",
-      "default": "./dist/db/database.js"
-    },
-    "./queries/*": {
-      "types": "./dist/queries/*.d.ts",
-      "default": "./dist/queries/*.js"
-    },
-    "./zod-schema/*": {
-      "types": "./dist/zod/*.d.ts",
-      "default": "./dist/zod/*.js"
-    },
-    "./durable-objects-helpers": {
-      "types": "./dist/durable-objects-helpers/*.d.ts",
-      "default": "./dist/durable-objects-helpers/*.js"
-    },
-    "./auth": {
-      "types": "./dist/better-auth/auth.d.ts",
-      "default": "./dist/better-auth/auth.js"
-    }
+    "./database": "./src/db/database.ts",
+    "./queries/*": "./src/queries/*.ts",
+    "./zod-schema/*": "./src/zod/*.ts",
+    "./durable-objects-helpers": "./src/durable-objects-helpers/index.ts",
+    "./auth": "./src/better-auth/auth.ts",
+    "./package.json": "./package.json"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@better-auth/stripe": "1.3.4",
-    "better-auth": "1.3.4",
-    "better-sqlite3": "^12.2.0",
-    "drizzle-orm": "^0.44.2",
-    "kysely": "^0.28.2",
+    "@better-auth/stripe": "1.3.34",
+    "better-auth": "1.3.34",
+    "drizzle-orm": "^0.44.7",
+    "kysely": "^0.28.8",
     "kysely-d1": "^0.4.0",
-    "nanoid": "^5.1.5",
-    "stripe": "^18.4.0",
-    "uuid": "^11.1.0",
-    "zod": "^3.25.67"
+    "nanoid": "^5.1.6",
+    "stripe": "^19.1.0",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250405.0",
-    "@types/node": "^22.15.19",
-    "drizzle-kit": "^0.31.1",
+    "@cloudflare/workers-types": "^4.20251014.0",
+    "@types/node": "^24.9.2",
+    "drizzle-kit": "^0.31.6",
     "tsc-alias": "^1.8.16",
-    "wrangler": "^4.22.0"
+    "wrangler": "^4.45.2"
   }
 }

@@ -1,13 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Globe } from "lucide-react";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Marker,
-} from "react-simple-maps";
-import { useGeoClickStore } from "@/hooks/geo-clicks-store";
-import { groupClicksByMile } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Globe } from 'lucide-react';
+import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
+import { useGeoClickStore } from '@/hooks/geo-clicks-store';
+import { groupClicksByMile } from '@/lib/utils';
 
 export function ActiveAreasMap() {
   const { clicks } = useGeoClickStore();
@@ -44,9 +39,9 @@ export function ActiveAreasMap() {
                     stroke="#9ca3af"
                     strokeWidth={0.2}
                     style={{
-                      default: { outline: "none" },
-                      hover: { outline: "none" },
-                      pressed: { outline: "none" },
+                      default: { outline: 'none' },
+                      hover: { outline: 'none' },
+                      pressed: { outline: 'none' },
                     }}
                   />
                 ))
@@ -58,56 +53,15 @@ export function ActiveAreasMap() {
               const secondMaxRadius = Math.min(4 + group.count * 1.5, 25);
 
               return (
-                <Marker
-                  key={index}
-                  coordinates={[group.longitude, group.latitude]}
-                >
+                <Marker key={index} coordinates={[group.longitude, group.latitude]}>
                   <g>
-                    <circle
-                      r={maxRadius}
-                      fill="none"
-                      stroke="#ef4444"
-                      strokeWidth="1"
-                      opacity="0"
-                    >
-                      <animate
-                        attributeName="r"
-                        from={baseRadius}
-                        to={maxRadius}
-                        dur="1.5s"
-                        repeatCount="indefinite"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        from="0.8"
-                        to="0"
-                        dur="1.5s"
-                        repeatCount="indefinite"
-                      />
+                    <circle r={maxRadius} fill="none" stroke="#ef4444" strokeWidth="1" opacity="0">
+                      <animate attributeName="r" from={baseRadius} to={maxRadius} dur="1.5s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" from="0.8" to="0" dur="1.5s" repeatCount="indefinite" />
                     </circle>
-                    <circle
-                      r={secondMaxRadius}
-                      fill="none"
-                      stroke="#ef4444"
-                      strokeWidth="0.5"
-                      opacity="0"
-                    >
-                      <animate
-                        attributeName="r"
-                        from={baseRadius}
-                        to={secondMaxRadius}
-                        dur="1.5s"
-                        begin="0.5s"
-                        repeatCount="indefinite"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        from="0.6"
-                        to="0"
-                        dur="1.5s"
-                        begin="0.5s"
-                        repeatCount="indefinite"
-                      />
+                    <circle r={secondMaxRadius} fill="none" stroke="#ef4444" strokeWidth="0.5" opacity="0">
+                      <animate attributeName="r" from={baseRadius} to={secondMaxRadius} dur="1.5s" begin="0.5s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" from="0.6" to="0" dur="1.5s" begin="0.5s" repeatCount="indefinite" />
                     </circle>
                     <circle r={baseRadius} fill="#ef4444" />
                   </g>
