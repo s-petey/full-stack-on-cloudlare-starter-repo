@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "stage:deploy-user-app": "pnpm i && pnpm run build-package && pnpm --filter user-application run stage:deploy",
+    "production:deploy-user-app": "pnpm i && pnpm run build-package && pnpm --filter user-application run production:deploy",
     "build-package": "pnpm --filter @repo/data-ops run check",
     "dev": "pnpm run -r --parallel dev",
     "dev-frontend": "pnpm --filter user-application run dev",
