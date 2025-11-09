@@ -1,6 +1,11 @@
-import { betterAuth } from 'better-auth';
-import { DatabaseSync } from 'node:sqlite';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { createBetterAuth } from '../src/auth';
 
-export const auth = betterAuth({
-  database: new DatabaseSync('./sqlite.db'),
-});
+export const auth = createBetterAuth(
+  drizzleAdapter(
+    {},
+    {
+      provider: 'sqlite',
+    },
+  ),
+);

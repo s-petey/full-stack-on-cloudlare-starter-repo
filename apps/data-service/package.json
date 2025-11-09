@@ -10,7 +10,7 @@
     "test": "vitest",
     "stage:cf-typegen": "wrangler types --env-interface BaseEnv --env stage",
     "cf-typegen": "wrangler types --env-interface BaseEnv --env stage",
-    "cf-migrate": "wrangler d1 migrations apply --local smart-links-stage --persist-to ../../.wrangler/state",
+    "cf-migrate": "wrangler d1 migrations apply --env stage --local smart-links-stage --persist-to ../../.wrangler/state",
     "fix": "prettier --write ."
   },
   "devDependencies": {

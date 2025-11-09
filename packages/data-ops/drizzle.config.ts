@@ -3,7 +3,7 @@ import { drizzleEnvLive } from './src/zod/env';
 
 const config: Config = {
   out: './src/drizzle-out',
-  schema: './src/drizzle-out/schema.ts',
+  schema: ['./src/drizzle-out/schema.ts', './src/drizzle-out/auth-schema.ts'],
   dialect: 'sqlite',
   driver: 'd1-http',
   dbCredentials: {
