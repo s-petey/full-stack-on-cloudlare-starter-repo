@@ -65,6 +65,17 @@ export async function updateLinkName({ linkId, name }: { linkId: string; name: s
     .where(and(eq(links.linkId, linkId), eq(links.accountId, accountId)));
 }
 
+export async function getLinkById(linkId: LinkSchemaType['linkId']) {
+  const db = getDb();
+
+  const result = await db.select().from(links).where(eq(links.linkId, linkId)).limit(1);
+
+  const firstResult = result.at(0);
+
+  const parsed = linkSchema.parse(firstResult);
+  return parsed;
+}
+
 export async function getLink(linkId: LinkSchemaType['linkId'], accountId: LinkSchemaType['accountId']) {
   const db = getDb();
 

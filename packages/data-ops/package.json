@@ -8,7 +8,7 @@
     "migrate": "echo 'this does nothing as we rely on wrangler d1 migrations'",
     "generate": "drizzle-kit generate --config drizzle.config.ts",
     "studio": "drizzle-kit studio --config drizzle.config.ts",
-    "better-auth-generate": "npx @better-auth/cli generate --config auth-gen/auth.ts",
+    "better-auth-generate": "pnpx @better-auth/cli generate --config auth-gen/auth.ts --output=src/drizzle-out/auth-schema.ts",
     "check": "tsc --project tsconfig.json",
     "fix": "prettier --write ."
   },
@@ -17,7 +17,7 @@
     "./queries/*": "./src/queries/*.ts",
     "./zod-schema/*": "./src/zod/*.ts",
     "./durable-objects-helpers": "./src/durable-objects-helpers/index.ts",
-    "./auth": "./src/better-auth/auth.ts",
+    "./auth": "./src/auth.ts",
     "./package.json": "./package.json"
   },
   "keywords": [],

@@ -18,13 +18,13 @@ App.get('/click-socket', async (c) => {
   const accountId = c.req.header('account-id');
 
   if (!accountId) return c.text('No Headers', 404);
-  const doId = c.env.LINK_CLICK_TRACKER_OBJECT.idFromName('hhJpSiYufu');
+  const doId = c.env.LINK_CLICK_TRACKER_OBJECT.idFromName(accountId);
   const stub = c.env.LINK_CLICK_TRACKER_OBJECT.get(doId);
   return await stub.fetch(c.req.raw);
 });
 
 App.get(
-  '/:id',
+  '/r/:id',
   // zValidator(
   //   'json',
   //   //
@@ -74,10 +74,10 @@ App.get(
   },
 );
 
-App.get('/click/:linkId', async (c) => {
-  const linkId = c.req.param('linkId');
+App.get('/click/:accountId', async (c) => {
+  const accountId = c.req.param('accountId');
 
-  const doId = c.env.LINK_CLICK_TRACKER_OBJECT.idFromName(linkId);
+  const doId = c.env.LINK_CLICK_TRACKER_OBJECT.idFromName(accountId);
   const stub = c.env.LINK_CLICK_TRACKER_OBJECT.get(doId);
 
   return stub.getLinkClicks(c.req.raw);
