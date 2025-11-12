@@ -1,10 +1,20 @@
 import { t } from '@/worker/trpc/trpc-instance';
 import { z } from 'zod';
 import { createLinkSchema, destinationsSchema } from '@repo/data-ops/zod-schema/links';
-import { createLink, getLink, getLinks, updateLinkDestinations, updateLinkName } from '@repo/data-ops/queries/links';
+import {
+  activeLinksLastHour,
+  createLink,
+  getLast24And48HourClicks,
+  getLast30DaysClicks,
+  getLast30DaysClicksByCountry,
+  getLink,
+  getLinks,
+  totalLinkClickLastHour,
+  updateLinkDestinations,
+  updateLinkName,
+} from '@repo/data-ops/queries/links';
 
 import { TRPCError } from '@trpc/server';
-import { ACTIVE_LINKS_LAST_HOUR, LAST_30_DAYS_BY_COUNTRY } from './dummy-data';
 
 export const linksTrpcRoutes = t.router({
   linkList: t.procedure
@@ -74,23 +84,19 @@ export const linksTrpcRoutes = t.router({
       );
     }),
 
-  activeLinks: t.procedure.query(async () => {
-    return ACTIVE_LINKS_LAST_HOUR;
+  activeLinks: t.procedure.query(async ({ ctx }) => {
+    return activeLinksLastHour(ctx.userInfo.userId);
   }),
-  totalLinkClickLastHour: t.procedure.query(async () => {
-    return 13;
+  totalLinkClickLastHour: t.procedure.query(async ({ ctx }) => {
+    return totalLinkClickLastHour(ctx.userInfo.userId);
   }),
-  last24HourClicks: t.procedure.query(async () => {
-    return {
-      last24Hours: 56,
-      previous24Hours: 532,
-      percentChange: 12,
-    };
+  last24HourClicks: t.procedure.query(async ({ ctx }) => {
+    return getLast24And48HourClicks(ctx.userInfo.userId);
   }),
-  last30DaysClicks: t.procedure.query(async () => {
-    return 78;
+  last30DaysClicks: t.procedure.query(async ({ ctx }) => {
+    return getLast30DaysClicks(ctx.userInfo.userId);
   }),
-  clicksByCountry: t.procedure.query(async () => {
-    return LAST_30_DAYS_BY_COUNTRY;
+  clicksByCountry: t.procedure.query(async ({ ctx }) => {
+    return getLast30DaysClicksByCountry(ctx.userInfo.userId);
   }),
 });

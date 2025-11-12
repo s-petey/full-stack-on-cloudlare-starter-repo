@@ -14,6 +14,13 @@ export const Route = createFileRoute('/app/_authed/links')({
   },
 });
 
+let BACKEND_URL = import.meta.env.VITE_BACKEND_HOST;
+if (BACKEND_URL.includes('localhost')) {
+  BACKEND_URL = 'http://' + BACKEND_URL + '/r/';
+} else {
+  BACKEND_URL = 'https://' + BACKEND_URL + '/r/';
+}
+
 function RouteComponent() {
   const { data: links } = useSuspenseQuery(trpc.links.linkList.queryOptions({}));
   const nav = useNavigate();
@@ -37,13 +44,13 @@ function RouteComponent() {
       header: 'Link',
       cell: (info) => (
         <div className="flex items-center gap-2">
-          <span className="truncate max-w-[200px]">{`https://${import.meta.env.VITE_BACKEND_HOST}/${info.getValue()}`}</span>
+          <span className="truncate max-w-[200px]">{BACKEND_URL + info.getValue()}</span>
           <Button
             variant="ghost"
             size="sm"
             onClick={(e) => {
               e.stopPropagation();
-              copyToClipboard(`https://${import.meta.env.VITE_BACKEND_HOST}/${info.getValue()}`);
+              copyToClipboard(BACKEND_URL + info.getValue());
             }}
           >
             <Copy className="h-4 w-4" />
