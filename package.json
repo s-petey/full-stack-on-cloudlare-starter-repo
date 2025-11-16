@@ -8,6 +8,7 @@
     "stage:deploy-data-service": "pnpm i && pnpm run build-package && pnpm --filter data-service run stage:deploy",
     "production:deploy-data-service": "pnpm i && pnpm run build-package && pnpm --filter data-service run production:deploy",
     "build-package": "pnpm --filter @repo/data-ops run check",
+    "cf-typegen": "pnpm --filter data-service run cf-typegen",
     "dev": "pnpm run -r --parallel dev",
     "dev-frontend": "pnpm --filter user-application run dev",
     "dev-data-service": "pnpm --filter data-service run dev",
@@ -18,7 +19,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^24.9.2",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3"
   },
