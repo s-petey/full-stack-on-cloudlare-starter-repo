@@ -10,7 +10,8 @@
     "studio": "drizzle-kit studio --config drizzle.config.ts",
     "better-auth-generate": "pnpx @better-auth/cli generate --config auth-gen/auth.ts --output=src/drizzle-out/auth-schema.ts",
     "check": "tsc --project tsconfig.json",
-    "fix": "prettier --write ."
+    "lint:fix": "biome check . --write",
+    "lint": "biome check ."
   },
   "exports": {
     "./database": "./src/db/database.ts",

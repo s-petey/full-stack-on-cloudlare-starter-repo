@@ -1,7 +1,13 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Check, Star } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 const plans = [
   {
@@ -63,9 +69,12 @@ export function PricingSection() {
           <Badge variant="outline" className="mb-4 px-3 py-1">
             Pricing
           </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Simple, transparent pricing</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+            Simple, transparent pricing
+          </h2>
           <p className="text-lg text-muted-foreground">
-            Choose the plan that fits your needs. All plans include our core link protection features.
+            Choose the plan that fits your needs. All plans include our core
+            link protection features.
           </p>
         </div>
 
@@ -73,7 +82,7 @@ export function PricingSection() {
         <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
           {plans.map((plan, index) => (
             <Card
-              key={index}
+              key={`${plan.name}-${index}`}
               className={`relative ${plan.popular ? 'border-primary shadow-lg scale-105' : 'border-border'} bg-card/50 backdrop-blur`}
             >
               {plan.popular && (
@@ -91,21 +100,29 @@ export function PricingSection() {
                   <span className="text-3xl font-bold">{plan.price}</span>
                   <span className="text-muted-foreground">{plan.period}</span>
                 </div>
-                <CardDescription className="mt-2">{plan.description}</CardDescription>
+                <CardDescription className="mt-2">
+                  {plan.description}
+                </CardDescription>
               </CardHeader>
 
               <CardContent className="space-y-6">
                 <ul className="space-y-3">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start gap-2">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2">
                       <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
                       <span className="text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
 
-                <Button className="w-full" variant={plan.popular ? 'default' : 'outline'} size="lg">
-                  {plan.name === 'Enterprise' ? 'Contact Sales' : 'Start Free Trial'}
+                <Button
+                  className="w-full"
+                  variant={plan.popular ? 'default' : 'outline'}
+                  size="lg"
+                >
+                  {plan.name === 'Enterprise'
+                    ? 'Contact Sales'
+                    : 'Start Free Trial'}
                 </Button>
               </CardContent>
             </Card>
@@ -114,7 +131,9 @@ export function PricingSection() {
 
         {/* Additional info */}
         <div className="text-center mt-12">
-          <p className="text-sm text-muted-foreground">All plans include a 14-day free trial. No credit card required.</p>
+          <p className="text-sm text-muted-foreground">
+            All plans include a 14-day free trial. No credit card required.
+          </p>
         </div>
       </div>
     </section>

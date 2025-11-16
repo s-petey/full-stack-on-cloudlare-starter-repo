@@ -1,7 +1,7 @@
+import { and, desc, eq, gt } from 'drizzle-orm';
 import { getDb } from '@/db/database';
 import { destinationEvaluations } from '@/drizzle-out/schema';
 import type { EvaluationProductStatusType } from '@/zod/links';
-import { and, desc, eq, gt } from 'drizzle-orm';
 
 // TODO: Zod or no?
 interface AddEvaluationParams {
@@ -30,14 +30,22 @@ export async function getNotAvailableEvaluations(accountId: string) {
   const result = await db
     .select()
     .from(destinationEvaluations)
-    .where(and(eq(destinationEvaluations.accountId, accountId), eq(destinationEvaluations.status, 'NOT_AVAILABLE_PRODUCT')))
+    .where(
+      and(
+        eq(destinationEvaluations.accountId, accountId),
+        eq(destinationEvaluations.status, 'NOT_AVAILABLE_PRODUCT'),
+      ),
+    )
     .orderBy(desc(destinationEvaluations.createdAt))
     .limit(20);
 
   return result;
 }
 
-export async function getEvaluations(accountId: string, createdBefore?: string) {
+export async function getEvaluations(
+  accountId: string,
+  createdBefore?: string,
+) {
   const db = getDb();
 
   const conditions = [eq(destinationEvaluations.accountId, accountId)];

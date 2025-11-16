@@ -1,10 +1,19 @@
 import { getLinkById, getLinkDestinations } from '@repo/data-ops/queries/links';
-import { destinationsSchema, type LinkSchemaType } from '@repo/data-ops/zod-schema/links';
-import { LinkClickMessageSchema, LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
+import {
+  destinationsSchema,
+  type LinkSchemaType,
+} from '@repo/data-ops/zod-schema/links';
+import {
+  LinkClickMessageSchema,
+  type LinkClickMessageType,
+} from '@repo/data-ops/zod-schema/queue';
 
 const TTL_ONE_DAY = 60 * 60 * 24;
 
-export function getDestinationForCountry(destinations: LinkSchemaType['destinations'], countryCode?: string) {
+export function getDestinationForCountry(
+  destinations: LinkSchemaType['destinations'],
+  countryCode?: string,
+) {
   if (countryCode && countryCode in destinations) {
     return destinations[countryCode];
   }
@@ -18,12 +27,16 @@ async function getLinkDestinationsFromKv(env: Env, id: string) {
     if (!linkDestinations) return null;
 
     return destinationsSchema.parse(linkDestinations);
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 }
 
-async function saveLinkDestinationsToKv(env: Env, id: string, linkDestinations: LinkSchemaType['destinations']) {
+async function saveLinkDestinationsToKv(
+  env: Env,
+  id: string,
+  linkDestinations: LinkSchemaType['destinations'],
+) {
   try {
     await env.KV.put(id, JSON.stringify(linkDestinations), {
       expirationTtl: TTL_ONE_DAY,
@@ -54,7 +67,11 @@ async function getRoutingDestinations(env: Env, id: LinkSchemaType['linkId']) {
   }
 }
 
-export async function getRoutingDestination(env: Env, id: LinkSchemaType['linkId'], countryCode?: string) {
+export async function getRoutingDestination(
+  env: Env,
+  id: LinkSchemaType['linkId'],
+  countryCode?: string,
+) {
   const linkDestinations = await getRoutingDestinations(env, id);
   if (!linkDestinations) {
     return null;
@@ -63,17 +80,34 @@ export async function getRoutingDestination(env: Env, id: LinkSchemaType['linkId
   return getDestinationForCountry(linkDestinations, countryCode);
 }
 
-export async function scheduleEvalWorkflow(env: Env, linkInfo: LinkClickMessageType['data']) {
-  const doId = env.EVALUATION_SCHEDULER_OBJECT.idFromName(`${linkInfo.id}:${linkInfo.destination}`);
+export async function scheduleEvalWorkflow(
+  env: Env,
+  linkInfo: LinkClickMessageType['data'],
+) {
+  const doId = env.EVALUATION_SCHEDULER_OBJECT.idFromName(
+    `${linkInfo.id}:${linkInfo.destination}`,
+  );
   const stub = env.EVALUATION_SCHEDULER_OBJECT.get(doId);
-  await stub.collectLinkClick(linkInfo.id, linkInfo.destination, linkInfo.country || 'UNKNOWN');
+  await stub.collectLinkClick(
+    linkInfo.id,
+    linkInfo.destination,
+    linkInfo.country || 'UNKNOWN',
+  );
 }
 
-export async function captureLinkClickInBackground(env: Env, message: LinkClickMessageType) {
+export async function captureLinkClickInBackground(
+  env: Env,
+  message: LinkClickMessageType,
+) {
   await env.QUEUE.send(LinkClickMessageSchema.encode(message));
 
   // TODO: Should we really log this?
-  if (!message.data.latitude || !message.data.longitude || !message.data.country) return;
+  if (
+    !message.data.latitude ||
+    !message.data.longitude ||
+    !message.data.country
+  )
+    return;
 
   const link = await getLinkById(message.data.id);
   const doId = env.LINK_CLICK_TRACKER_OBJECT.idFromName(link.accountId);

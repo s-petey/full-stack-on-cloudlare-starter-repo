@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { IconInnerShadowTop } from '@tabler/icons-react';
+import type * as React from 'react';
 
 import { NavMain } from '@/components/common/nav-main';
 import { NavUser } from '@/components/common/nav-user';
@@ -19,8 +19,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
-              <a href="#">
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
+            >
+              <a
+                // biome-ignore lint/a11y/useValidAnchor: TODO
+                href="#"
+              >
                 <IconInnerShadowTop className="!size-5" />
                 <span className="text-base font-semibold">SmrtLnks</span>
               </a>

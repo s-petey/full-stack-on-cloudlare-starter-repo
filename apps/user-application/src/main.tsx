@@ -1,15 +1,16 @@
+import { RouterProvider } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { RouterProvider } from '@tanstack/react-router';
 import './styles/globals.css';
 
-import { createRouter } from './router';
 import reportWebVitals from './reportWebVitals';
+import { createRouter } from './router';
 
 // Create a new router instance
 const router = createRouter();
 
 // Render the app
+// biome-ignore lint/style/noNonNullAssertion: APP SETUP
 const rootElement = document.getElementById('app')!;
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);

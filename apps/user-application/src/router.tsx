@@ -1,11 +1,10 @@
-import { createRouter as createTanStackRouter } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createRouter as createTanStackRouter } from '@tanstack/react-router';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
-
-import { routeTree } from './routeTree.gen';
-import type { AppRouter } from '@/worker/trpc/router';
-import Pending from '@/components/common/pending';
 import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
+import Pending from '@/components/common/pending';
+import type { AppRouter } from '@/worker/trpc/router';
+import { routeTree } from './routeTree.gen';
 
 export const queryClient = new QueryClient();
 
@@ -31,7 +30,11 @@ export function createRouter() {
     },
     defaultPendingComponent: () => <Pending />,
     Wrap: function WrapComponent({ children }) {
-      return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+      return (
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      );
     },
   });
 

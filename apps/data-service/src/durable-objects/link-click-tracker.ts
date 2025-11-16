@@ -1,5 +1,5 @@
-import { durableObjectGeoClickArraySchema } from '@repo/data-ops/zod-schema/links';
 import { DurableObject } from 'cloudflare:workers';
+import { durableObjectGeoClickArraySchema } from '@repo/data-ops/zod-schema/links';
 import { desc, gt, lt } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/durable-sqlite';
 import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
@@ -39,8 +39,10 @@ export class LinkClickTracker extends DurableObject<Env> {
         await this._migrate(),
       ]);
 
-      this.leastRecentOffsetTime = leastRecentOffsetTime ?? this.mostRecentOffsetTime;
-      this.mostRecentOffsetTime = mostRecentOffsetTime ?? this.mostRecentOffsetTime;
+      this.leastRecentOffsetTime =
+        leastRecentOffsetTime ?? this.mostRecentOffsetTime;
+      this.mostRecentOffsetTime =
+        mostRecentOffsetTime ?? this.mostRecentOffsetTime;
     });
   }
 
@@ -60,9 +62,20 @@ export class LinkClickTracker extends DurableObject<Env> {
 
   async alarm(_alarmInfo?: AlarmInvocationInfo): Promise<void> {
     const connections = await this.ctx.getWebSockets();
-    const clickData = await this.getRecentClicks(this.mostRecentOffsetTime, 100);
+    const clickData = await this.getRecentClicks(
+      this.mostRecentOffsetTime,
+      100,
+    );
 
-    await Promise.all(connections.map(async (ws) => ws.send(JSON.stringify(durableObjectGeoClickArraySchema.encode(clickData.clicks)))));
+    await Promise.all(
+      connections.map(async (ws) =>
+        ws.send(
+          JSON.stringify(
+            durableObjectGeoClickArraySchema.encode(clickData.clicks),
+          ),
+        ),
+      ),
+    );
 
     await Promise.all([
       this.flushOffsetTimes(clickData.mostRecentTime, clickData.oldestTime),
@@ -70,7 +83,10 @@ export class LinkClickTracker extends DurableObject<Env> {
     ]);
   }
 
-  private async flushOffsetTimes(mostRecentOffsetTime: number, leastRecentOffsetTime: number) {
+  private async flushOffsetTimes(
+    mostRecentOffsetTime: number,
+    leastRecentOffsetTime: number,
+  ) {
     this.mostRecentOffsetTime = mostRecentOffsetTime;
     this.leastRecentOffsetTime = leastRecentOffsetTime;
 
@@ -121,6 +137,9 @@ export class LinkClickTracker extends DurableObject<Env> {
   }
 
   private async deleteClicksBefore(time: number) {
-    await this.db.delete(geoLinkClicks).where(lt(geoLinkClicks.time, time)).run();
+    await this.db
+      .delete(geoLinkClicks)
+      .where(lt(geoLinkClicks.time, time))
+      .run();
   }
 }

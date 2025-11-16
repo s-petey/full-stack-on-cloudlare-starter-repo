@@ -30,7 +30,9 @@ export const LinkClickMessageSchema = BaseQueueMessageSchema.extend({
   }),
 });
 
-export const QueueMessageSchema = z.discriminatedUnion('type', [LinkClickMessageSchema]);
+export const QueueMessageSchema = z.discriminatedUnion('type', [
+  LinkClickMessageSchema,
+]);
 
 export type LinkClickMessageType = z.infer<typeof LinkClickMessageSchema>;
 export type QueueMessageType = z.infer<typeof QueueMessageSchema>;

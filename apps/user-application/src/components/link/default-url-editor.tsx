@@ -1,11 +1,11 @@
+import type { DestinationsSchemaType } from '@repo/data-ops/zod-schema/links';
+import { useMutation } from '@tanstack/react-query';
+import { Check, Edit3 } from 'lucide-react';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Edit3, Check } from 'lucide-react';
-import { DestinationsSchemaType } from '@repo/data-ops/zod-schema/links';
 import { trpc } from '@/router';
-import { useMutation } from '@tanstack/react-query';
 
 interface DefaultUrlEditorProps {
   destinations: DestinationsSchemaType;
@@ -49,7 +49,9 @@ export function DefaultUrlEditor({
       <Label htmlFor="defaultUrl" className="text-sm font-medium">
         {label}
       </Label>
-      {description && <p className="text-sm text-muted-foreground">{description}</p>}
+      {description && (
+        <p className="text-sm text-muted-foreground">{description}</p>
+      )}
       {isEditing ? (
         <div className="flex items-center gap-2">
           <Input
@@ -67,7 +69,12 @@ export function DefaultUrlEditor({
       ) : (
         <div className="flex items-center gap-3 p-4 rounded-lg border bg-muted/30">
           <code className="text-sm text-muted-foreground flex-1">{url}</code>
-          <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)} className="h-8 w-8 p-0">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsEditing(true)}
+            className="h-8 w-8 p-0"
+          >
             <Edit3 className="w-4 h-4" />
           </Button>
         </div>

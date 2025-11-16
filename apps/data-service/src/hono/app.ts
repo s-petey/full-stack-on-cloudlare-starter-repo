@@ -1,8 +1,11 @@
-import { captureLinkClickInBackground, getRoutingDestination } from '@/helpers/route-ops';
 import { cloudflareInfoSchema } from '@repo/data-ops/zod-schema/links';
-import { LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
+import type { LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
 import { Hono } from 'hono';
 import z from 'zod';
+import {
+  captureLinkClickInBackground,
+  getRoutingDestination,
+} from '@/helpers/route-ops';
 
 const App = new Hono<{ Bindings: Env }>();
 
@@ -44,7 +47,7 @@ App.get(
 
     const cfInfo = cloudflareInfoSchema.safeParse(c.req.raw.cf);
 
-    let country: string | undefined = undefined;
+    let country: string | undefined;
     if (cfInfo.success) {
       country = cfInfo.data.country;
     }

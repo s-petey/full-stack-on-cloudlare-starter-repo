@@ -1,5 +1,7 @@
-export { drizzle, DrizzleSqliteDODatabase } from 'drizzle-orm/durable-sqlite';
+export { DrizzleSqliteDODatabase, drizzle } from 'drizzle-orm/durable-sqlite';
+
 import { integer, real, sqliteTable } from 'drizzle-orm/sqlite-core';
+
 export { migrate } from 'drizzle-orm/durable-sqlite/migrator';
 
 // Define the schema for geo link clicks

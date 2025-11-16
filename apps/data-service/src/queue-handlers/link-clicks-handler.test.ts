@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { handleLinkClick } from '@/queue-handlers/link-clicks-handler';
 import { addLinkClick } from '@repo/data-ops/queries/links';
-import { scheduleEvalWorkflow } from '@/helpers/route-ops';
 import type { LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { scheduleEvalWorkflow } from '@/helpers/route-ops';
+import { handleLinkClick } from '@/queue-handlers/link-clicks-handler';
 
 vi.mock('@repo/data-ops/queries/links', () => ({
   addLinkClick: vi.fn(),
@@ -62,14 +62,19 @@ describe('handleLinkClick', () => {
     await handleLinkClick(mockEnv, eventWithoutOptionals);
 
     expect(addLinkClick).toHaveBeenCalledWith(eventWithoutOptionals.data);
-    expect(scheduleEvalWorkflow).toHaveBeenCalledWith(mockEnv, eventWithoutOptionals.data);
+    expect(scheduleEvalWorkflow).toHaveBeenCalledWith(
+      mockEnv,
+      eventWithoutOptionals.data,
+    );
   });
 
   it('should handle errors from addLinkClick gracefully', async () => {
     const addLinkClickMock = vi.mocked(addLinkClick);
     addLinkClickMock.mockRejectedValueOnce(new Error('Database error'));
 
-    await expect(handleLinkClick(mockEnv, mockEvent)).rejects.toThrow('Database error');
+    await expect(handleLinkClick(mockEnv, mockEvent)).rejects.toThrow(
+      'Database error',
+    );
     expect(scheduleEvalWorkflow).not.toHaveBeenCalled();
   });
 
@@ -77,7 +82,9 @@ describe('handleLinkClick', () => {
     const scheduleEvalWorkflowMock = vi.mocked(scheduleEvalWorkflow);
     scheduleEvalWorkflowMock.mockRejectedValueOnce(new Error('Workflow error'));
 
-    await expect(handleLinkClick(mockEnv, mockEvent)).rejects.toThrow('Workflow error');
+    await expect(handleLinkClick(mockEnv, mockEvent)).rejects.toThrow(
+      'Workflow error',
+    );
     expect(addLinkClick).toHaveBeenCalledWith(mockEvent.data);
   });
 });

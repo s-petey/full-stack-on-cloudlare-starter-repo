@@ -1,17 +1,19 @@
-import { sqliteTable, AnySQLiteColumn, text, numeric, index, real } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
+import {
+  index,
+  numeric,
+  real,
+  sqliteTable,
+  text,
+} from 'drizzle-orm/sqlite-core';
 import { evaluationProductStatus } from '@/zod/links';
 
 export const links = sqliteTable('links', {
   linkId: text('link_id').primaryKey().notNull(),
   accountId: text('account_id').notNull(),
   destinations: text().notNull(),
-  created: numeric()
-    .default(sql`(CURRENT_TIMESTAMP)`)
-    .notNull(),
-  updated: numeric()
-    .default(sql`(CURRENT_TIMESTAMP)`)
-    .notNull(),
+  created: numeric().default(sql`(CURRENT_TIMESTAMP)`).notNull(),
+  updated: numeric().default(sql`(CURRENT_TIMESTAMP)`).notNull(),
   name: text().notNull(),
 });
 
@@ -25,7 +27,10 @@ export const linkClicks = sqliteTable(
     latitude: real(),
     longitude: real(),
   },
-  (table) => [index('idx_link_clicks_id').on(table.id), index('idx_link_clicks_clicked_time').on(table.clickedTime)],
+  (table) => [
+    index('idx_link_clicks_id').on(table.id),
+    index('idx_link_clicks_clicked_time').on(table.clickedTime),
+  ],
 );
 
 export const destinationEvaluations = sqliteTable(
@@ -47,5 +52,10 @@ export const destinationEvaluations = sqliteTable(
       .default(sql`(CURRENT_TIMESTAMP)`)
       .notNull(),
   },
-  (table) => [index('idx_destination_evaluations_account_time').on(table.accountId, table.createdAt)],
+  (table) => [
+    index('idx_destination_evaluations_account_time').on(
+      table.accountId,
+      table.createdAt,
+    ),
+  ],
 );

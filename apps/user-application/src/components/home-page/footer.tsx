@@ -10,21 +10,25 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Product</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Features
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Pricing
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   API Docs
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Integrations
                 </a>
@@ -37,21 +41,25 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Company</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   About
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Blog
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Careers
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Contact
                 </a>
@@ -64,21 +72,25 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Support</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Help Center
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Community
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Status
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Security
                 </a>
@@ -91,21 +103,25 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Legal</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Privacy
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Terms
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Cookie Policy
                 </a>
               </li>
               <li>
+                {/** biome-ignore lint/a11y/useValidAnchor: TODO */}
                 <a href="#" className="hover:text-foreground transition-colors">
                   Compliance
                 </a>
@@ -119,11 +135,15 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">SL</span>
+              <span className="text-primary-foreground font-bold text-sm">
+                SL
+              </span>
             </div>
             <span className="font-semibold">SmartLinks</span>
           </div>
-          <p className="text-sm text-muted-foreground">© 2024 SmartLinks. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">
+            © 2024 SmartLinks. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

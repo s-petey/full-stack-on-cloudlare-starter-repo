@@ -1,12 +1,29 @@
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { ChevronLeft, ChevronRight, Info } from 'lucide-react';
-import { trpc } from '@/router';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+import { ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { trpc } from '@/router';
 
 type Evaluation = {
   id: string;
@@ -20,7 +37,9 @@ type Evaluation = {
 
 export function EvaluationsTable() {
   const navigate = useNavigate();
-  const [createdBefore, setCreatedBefore] = useState<string | undefined>(undefined);
+  const [createdBefore, setCreatedBefore] = useState<string | undefined>(
+    undefined,
+  );
   const [paginationHistory, setPaginationHistory] = useState<string[]>([]);
 
   const { data: evaluationsData } = useSuspenseQuery(
@@ -69,7 +88,11 @@ export function EvaluationsTable() {
   const columns = [
     columnHelper.accessor('createdAt', {
       header: 'Created At',
-      cell: (info) => <div className="text-sm text-muted-foreground">{formatDate(info.getValue())}</div>,
+      cell: (info) => (
+        <div className="text-sm text-muted-foreground">
+          {formatDate(info.getValue())}
+        </div>
+      ),
     }),
     columnHelper.accessor('status', {
       header: 'Status',
@@ -77,7 +100,9 @@ export function EvaluationsTable() {
         const status = info.getValue();
         const statusDisplay = getStatusDisplay(status);
         return (
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${statusDisplay.classes}`}>
+          <span
+            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${statusDisplay.classes}`}
+          >
             {statusDisplay.label}
           </span>
         );
@@ -103,6 +128,8 @@ export function EvaluationsTable() {
       cell: (info) => {
         const url = info.getValue();
         return (
+          // biome-ignore lint/a11y/noStaticElementInteractions: FIXME
+          // biome-ignore lint/a11y/useKeyWithClickEvents: FIXME
           <div
             className="text-sm font-medium text-ellipsis overflow-hidden max-w-[200px] text-blue-600 hover:text-blue-800 cursor-pointer underline"
             onClick={(e) => {
@@ -135,7 +162,9 @@ export function EvaluationsTable() {
       const newHistory = [...paginationHistory];
       const previousCreatedBefore = newHistory.pop();
       setPaginationHistory(newHistory);
-      setCreatedBefore(previousCreatedBefore === '' ? undefined : previousCreatedBefore);
+      setCreatedBefore(
+        previousCreatedBefore === '' ? undefined : previousCreatedBefore,
+      );
     }
   };
 
@@ -148,7 +177,12 @@ export function EvaluationsTable() {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead className="pl-4" key={header.id}>
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -169,13 +203,21 @@ export function EvaluationsTable() {
                   }}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No evaluations found.
                 </TableCell>
               </TableRow>
@@ -185,9 +227,16 @@ export function EvaluationsTable() {
       </div>
 
       <div className="flex items-center justify-between px-2">
-        <div className="flex-1 text-sm text-muted-foreground">Showing {evaluations.length} entries</div>
+        <div className="flex-1 text-sm text-muted-foreground">
+          Showing {evaluations.length} entries
+        </div>
         <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm" onClick={handlePreviousPage} disabled={paginationHistory.length === 0}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handlePreviousPage}
+            disabled={paginationHistory.length === 0}
+          >
             <ChevronLeft className="h-4 w-4" />
             Previous
           </Button>
@@ -195,7 +244,9 @@ export function EvaluationsTable() {
             variant="outline"
             size="sm"
             onClick={handleNextPage}
-            disabled={!evaluationsData.oldestCreatedAt || evaluations.length <= 10}
+            disabled={
+              !evaluationsData.oldestCreatedAt || evaluations.length <= 10
+            }
           >
             Next
             <ChevronRight className="h-4 w-4" />

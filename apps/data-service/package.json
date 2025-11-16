@@ -11,7 +11,8 @@
     "stage:cf-typegen": "wrangler types --env-interface BaseEnv --env stage",
     "cf-typegen": "wrangler types --env-interface BaseEnv --env stage",
     "cf-migrate": "wrangler d1 migrations apply --env stage --local smart-links-stage --persist-to ../../.wrangler/state",
-    "fix": "prettier --write ."
+    "lint:fix": "biome check . --write",
+    "lint": "biome check ."
   },
   "devDependencies": {
     "@cloudflare/puppeteer": "^1.0.4",

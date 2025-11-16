@@ -1,6 +1,6 @@
 import { drizzle } from 'drizzle-orm/d1';
 
-let db: ReturnType<typeof drizzle>;
+let db: ReturnType<typeof drizzle> | null = null;
 
 export function initDatabase(bindingDb: D1Database) {
   db = drizzle(bindingDb);

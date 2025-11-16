@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 import {
-  MetricsCards,
   ActiveAreasMap,
-  TopCountriesTable,
-  ProblematicLinksTable,
   ActiveLinksTable,
   ActiveRegionMap,
+  MetricsCards,
+  ProblematicLinksTable,
+  TopCountriesTable,
 } from '@/components/dashboard';
 import { useClickSocket } from '@/hooks/clicks-socket';
 
@@ -13,12 +13,24 @@ export const Route = createFileRoute('/app/_authed/')({
   component: RouteComponent,
   loader: async ({ context }) => {
     await Promise.all([
-      context.queryClient.prefetchQuery(context.trpc.links.activeLinks.queryOptions()),
-      context.queryClient.prefetchQuery(context.trpc.links.totalLinkClickLastHour.queryOptions()),
-      context.queryClient.prefetchQuery(context.trpc.links.last24HourClicks.queryOptions()),
-      context.queryClient.prefetchQuery(context.trpc.links.last30DaysClicks.queryOptions()),
-      context.queryClient.prefetchQuery(context.trpc.evaluations.problematicDestinations.queryOptions()),
-      context.queryClient.prefetchQuery(context.trpc.links.clicksByCountry.queryOptions()),
+      context.queryClient.prefetchQuery(
+        context.trpc.links.activeLinks.queryOptions(),
+      ),
+      context.queryClient.prefetchQuery(
+        context.trpc.links.totalLinkClickLastHour.queryOptions(),
+      ),
+      context.queryClient.prefetchQuery(
+        context.trpc.links.last24HourClicks.queryOptions(),
+      ),
+      context.queryClient.prefetchQuery(
+        context.trpc.links.last30DaysClicks.queryOptions(),
+      ),
+      context.queryClient.prefetchQuery(
+        context.trpc.evaluations.problematicDestinations.queryOptions(),
+      ),
+      context.queryClient.prefetchQuery(
+        context.trpc.links.clicksByCountry.queryOptions(),
+      ),
     ]);
   },
 });
@@ -33,8 +45,12 @@ function RouteComponent() {
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
             <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`} />
-              <span className="text-sm text-muted-foreground">{isConnected ? 'Connected' : 'Disconnected'}</span>
+              <div
+                className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`}
+              />
+              <span className="text-sm text-muted-foreground">
+                {isConnected ? 'Connected' : 'Disconnected'}
+              </span>
             </div>
           </div>
 

@@ -1,6 +1,13 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { MapPin } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 interface City {
   city: string;
@@ -32,10 +39,14 @@ export function TopCitiesTable({ cities }: TopCitiesTableProps) {
             </TableHeader>
             <TableBody>
               {cities.map((city, index) => (
-                <TableRow key={index}>
+                <TableRow key={`${city.city}-${index}`}>
                   <TableCell className="font-medium">{city.city}</TableCell>
-                  <TableCell className="text-muted-foreground">{city.country}</TableCell>
-                  <TableCell className="text-right font-semibold">{city.clicks}</TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {city.country}
+                  </TableCell>
+                  <TableCell className="text-right font-semibold">
+                    {city.clicks}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

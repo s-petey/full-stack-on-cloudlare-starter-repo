@@ -15,7 +15,10 @@ export async function collectDestinationInfo(env: Env, destinationUrl: string) {
   await page.waitForNetworkIdle();
 
   const html = await page.content();
-  const screenshotBuffer = await page.screenshot({ fullPage: true, encoding: 'base64' });
+  const screenshotBuffer = await page.screenshot({
+    fullPage: true,
+    encoding: 'base64',
+  });
   const screenshotDataBuffer = Buffer.from(screenshotBuffer, 'base64');
   const markdown = htmlToMarkdown(html, { baseUrl: destinationUrl });
 

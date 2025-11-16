@@ -16,11 +16,16 @@ export class EvaluationScheduler extends DurableObject<Env> {
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
     ctx.blockConcurrencyWhile(async () => {
-      this.clickData = (await ctx.storage.get<ClickData>(CLICK_DATA_STORAGE_KEY)) || null;
+      this.clickData =
+        (await ctx.storage.get<ClickData>(CLICK_DATA_STORAGE_KEY)) || null;
     });
   }
 
-  async collectLinkClick(linkId: string, destinationUrl: string, destinationCountryCode: string) {
+  async collectLinkClick(
+    linkId: string,
+    destinationUrl: string,
+    destinationCountryCode: string,
+  ) {
     this.clickData = {
       linkId,
       destinationUrl,

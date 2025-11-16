@@ -1,10 +1,17 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { formatRelativeTime } from '@/lib/utils';
-import { trpc } from '@/router';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { MousePointer } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { formatRelativeTime } from '@/lib/utils';
+import { trpc } from '@/router';
 
 export function ActiveLinksTable() {
   const navigate = useNavigate();
@@ -25,7 +32,9 @@ export function ActiveLinksTable() {
       </CardHeader>
       <CardContent>
         {data.length === 0 ? (
-          <div className="text-center py-4 text-muted-foreground">No link clicks in the last 60 Minutes</div>
+          <div className="text-center py-4 text-muted-foreground">
+            No link clicks in the last 60 Minutes
+          </div>
         ) : (
           <Table>
             <TableHeader>
@@ -38,7 +47,7 @@ export function ActiveLinksTable() {
             <TableBody>
               {data.map((link, index) => (
                 <TableRow
-                  key={index}
+                  key={`${link.name}-${index}`}
                   onClick={() =>
                     navigate({
                       to: '/app/link/$id',
@@ -52,9 +61,13 @@ export function ActiveLinksTable() {
                   <TableCell className="font-medium">
                     <div className="max-w-xs truncate">{link.name}</div>
                   </TableCell>
-                  <TableCell className="text-right font-semibold">{link.clickCount}</TableCell>
+                  <TableCell className="text-right font-semibold">
+                    {link.clickCount}
+                  </TableCell>
                   <TableCell className="text-right text-muted-foreground">
-                    {link.lastClicked ? formatRelativeTime(link.lastClicked) : '-'}
+                    {link.lastClicked
+                      ? formatRelativeTime(link.lastClicked)
+                      : '-'}
                   </TableCell>
                 </TableRow>
               ))}

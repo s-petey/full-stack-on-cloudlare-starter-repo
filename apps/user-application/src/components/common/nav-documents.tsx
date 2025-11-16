@@ -1,6 +1,12 @@
 'use client';
 
-import { IconDots, IconFolder, IconShare3, IconTrash, type Icon } from '@tabler/icons-react';
+import {
+  type Icon,
+  IconDots,
+  IconFolder,
+  IconShare3,
+  IconTrash,
+} from '@tabler/icons-react';
 
 import {
   DropdownMenu,
@@ -44,12 +50,19 @@ export function NavDocuments({
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuAction showOnHover className="data-[state=open]:bg-accent rounded-sm">
+                <SidebarMenuAction
+                  showOnHover
+                  className="data-[state=open]:bg-accent rounded-sm"
+                >
                   <IconDots />
                   <span className="sr-only">More</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-24 rounded-lg" side={isMobile ? 'bottom' : 'right'} align={isMobile ? 'end' : 'start'}>
+              <DropdownMenuContent
+                className="w-24 rounded-lg"
+                side={isMobile ? 'bottom' : 'right'}
+                align={isMobile ? 'end' : 'start'}
+              >
                 <DropdownMenuItem>
                   <IconFolder />
                   <span>Open</span>

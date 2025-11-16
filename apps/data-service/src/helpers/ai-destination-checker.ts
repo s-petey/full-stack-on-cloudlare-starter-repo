@@ -1,5 +1,5 @@
-import { createWorkersAI } from 'workers-ai-provider';
 import { generateObject } from 'ai';
+import { createWorkersAI } from 'workers-ai-provider';
 import { z } from 'zod';
 
 const SYSTEM_PROMPT =
@@ -16,13 +16,15 @@ Provide a clear reason supporting your determination based on the text.
 
 ---`;
 
-const productStatus = z.enum(['AVAILABLE_PRODUCT', 'NOT_AVAILABLE_PRODUCT', 'UNKNOWN_STATUS']).meta({
-  description: `Indicates the product's availability on the page:
+const productStatus = z
+  .enum(['AVAILABLE_PRODUCT', 'NOT_AVAILABLE_PRODUCT', 'UNKNOWN_STATUS'])
+  .meta({
+    description: `Indicates the product's availability on the page:
 - AVAILABLE_PRODUCT: The product appears available for purchase.
 - NOT_AVAILABLE_PRODUCT: The product appears unavailable (sold out, discontinued, etc.).
 - UNKNOWN_STATUS: The status could not be determined from the text.
 `.trim(),
-});
+  });
 
 const productStatusReason = z
   .string()
@@ -35,7 +37,9 @@ const pageStatus = z
     status: productStatus,
     statusReason: productStatusReason,
   })
-  .describe('Information about the product availability status determined from the webpage content.');
+  .describe(
+    'Information about the product availability status determined from the webpage content.',
+  );
 
 const resultSchema = z
   .object({
@@ -48,7 +52,7 @@ export async function aiDestinationChecker(env: Env, markdown: string) {
 
   const result = await generateObject({
     mode: 'json',
-    // Currently workersAi does not have all the valid input types. Cast to any as a stop gap
+    // biome-ignore lint/suspicious/noExplicitAny: Currently workersAi does not have all the valid input types. Cast to any as a stop gap
     model: workersAi('@cf/meta/llama-3.3-70b-instruct-fp8-fast' as any),
     prompt: `
       ${PROMPT_START}

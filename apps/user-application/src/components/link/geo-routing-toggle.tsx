@@ -1,6 +1,8 @@
+import type { DestinationsSchemaType } from '@repo/data-ops/zod-schema/links';
+import { useMutation } from '@tanstack/react-query';
+import { Globe } from 'lucide-react';
 import { useState } from 'react';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
+import { toast } from 'sonner';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,11 +13,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { DestinationsSchemaType } from '@repo/data-ops/zod-schema/links';
-import { Globe } from 'lucide-react';
-import { useMutation } from '@tanstack/react-query';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import { queryClient, trpc } from '@/router';
-import { toast } from 'sonner';
 
 interface GeoRoutingToggleProps {
   destinations: DestinationsSchemaType;
@@ -24,7 +24,12 @@ interface GeoRoutingToggleProps {
   geoToggle: boolean;
 }
 
-export function GeoRoutingToggle({ destinations, linkId, setGeoToggle, geoToggle }: GeoRoutingToggleProps) {
+export function GeoRoutingToggle({
+  destinations,
+  linkId,
+  setGeoToggle,
+  geoToggle,
+}: GeoRoutingToggleProps) {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const updateDestinationMutation = useMutation(
@@ -43,7 +48,9 @@ export function GeoRoutingToggle({ destinations, linkId, setGeoToggle, geoToggle
     }),
   );
 
-  const handleUpdateDestination = (updatedDestinations: DestinationsSchemaType) => {
+  const handleUpdateDestination = (
+    updatedDestinations: DestinationsSchemaType,
+  ) => {
     updateDestinationMutation.mutate({
       linkId: linkId,
       destinations: updatedDestinations,
@@ -82,7 +89,9 @@ export function GeoRoutingToggle({ destinations, linkId, setGeoToggle, geoToggle
               <Globe className="w-4 h-4" />
               Geo Routing
             </Label>
-            <p className="text-sm text-muted-foreground">Route users to different destinations based on their location</p>
+            <p className="text-sm text-muted-foreground">
+              Route users to different destinations based on their location
+            </p>
           </div>
           <Switch checked={geoToggle} onCheckedChange={handleToggle} />
         </div>
@@ -93,12 +102,15 @@ export function GeoRoutingToggle({ destinations, linkId, setGeoToggle, geoToggle
           <AlertDialogHeader>
             <AlertDialogTitle>Disable Geo Routing?</AlertDialogTitle>
             <AlertDialogDescription>
-              Geo destination links will be removed and only the default destination will remain. This action cannot be undone.
+              Geo destination links will be removed and only the default
+              destination will remain. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmDisable}>Disable Geo Routing</AlertDialogAction>
+            <AlertDialogAction onClick={handleConfirmDisable}>
+              Disable Geo Routing
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

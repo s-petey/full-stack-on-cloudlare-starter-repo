@@ -1,9 +1,14 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { account, session, user, verification } from '../src/drizzle-out/auth-schema';
+import {
+  account,
+  session,
+  user,
+  verification,
+} from '../src/drizzle-out/auth-schema';
 import { getDb } from './db/database';
 
-let auth: ReturnType<typeof betterAuth>;
+let auth: ReturnType<typeof betterAuth> | null = null;
 
 export function createBetterAuth(
   db: NonNullable<Parameters<typeof betterAuth>[0]['database']>,
@@ -21,7 +26,7 @@ export function createBetterAuth(
 }
 
 export function getAuth(google: { clientId: string; clientSecret: string }) {
-  if (auth) return auth;
+  if (auth !== null) return auth;
 
   auth = createBetterAuth(
     drizzleAdapter(getDb(), {

@@ -1,11 +1,18 @@
+import { and, count, desc, eq, gt, max, sql } from 'drizzle-orm';
+import { nanoid } from 'nanoid';
 import { getDb } from '@/db/database';
 import { linkClicks, links } from '@/drizzle-out/schema';
-import { CreateLinkSchemaType, linkSchema, LinkSchemaType } from '@/zod/links';
-import { nanoid } from 'nanoid';
-import { eq, and, gt, desc, count, max, sql } from 'drizzle-orm';
-import { LinkClickMessageType, stringToIsoDateTime } from '@/zod/queue';
+import {
+  type CreateLinkSchemaType,
+  type LinkSchemaType,
+  linkSchema,
+} from '@/zod/links';
+import { type LinkClickMessageType, stringToIsoDateTime } from '@/zod/queue';
 
-export async function createLink(link: CreateLinkSchemaType, accountId: LinkSchemaType['accountId']) {
+export async function createLink(
+  link: CreateLinkSchemaType,
+  accountId: LinkSchemaType['accountId'],
+) {
   const db = getDb();
 
   const newId = nanoid(10);
@@ -29,7 +36,10 @@ export async function createLink(link: CreateLinkSchemaType, accountId: LinkSche
   return result.linkId;
 }
 
-export async function getLinks(accountId: LinkSchemaType['accountId'], createdBefore?: string) {
+export async function getLinks(
+  accountId: LinkSchemaType['accountId'],
+  createdBefore?: string,
+) {
   const db = getDb();
   const conditions = [eq(links.accountId, accountId)];
 
@@ -52,7 +62,10 @@ export async function getLinks(accountId: LinkSchemaType['accountId'], createdBe
   return parsedResults;
 }
 
-export async function updateLinkName({ linkId, name }: { linkId: string; name: string }, accountId: LinkSchemaType['accountId']) {
+export async function updateLinkName(
+  { linkId, name }: { linkId: string; name: string },
+  accountId: LinkSchemaType['accountId'],
+) {
   const db = getDb();
   const parsedName = linkSchema.shape.name.parse(name);
 
@@ -68,7 +81,11 @@ export async function updateLinkName({ linkId, name }: { linkId: string; name: s
 export async function getLinkById(linkId: LinkSchemaType['linkId']) {
   const db = getDb();
 
-  const result = await db.select().from(links).where(eq(links.linkId, linkId)).limit(1);
+  const result = await db
+    .select()
+    .from(links)
+    .where(eq(links.linkId, linkId))
+    .limit(1);
 
   const firstResult = result.at(0);
 
@@ -76,7 +93,10 @@ export async function getLinkById(linkId: LinkSchemaType['linkId']) {
   return parsed;
 }
 
-export async function getLink(linkId: LinkSchemaType['linkId'], accountId: LinkSchemaType['accountId']) {
+export async function getLink(
+  linkId: LinkSchemaType['linkId'],
+  accountId: LinkSchemaType['accountId'],
+) {
   const db = getDb();
 
   const result = await db
@@ -112,12 +132,17 @@ export async function getLinkDestinations(linkId: LinkSchemaType['linkId']) {
     return null;
   }
 
-  const parsed = linkSchema.shape.destinations.parse(JSON.parse(firstResult.destinations));
+  const parsed = linkSchema.shape.destinations.parse(
+    JSON.parse(firstResult.destinations),
+  );
   return parsed;
 }
 
 export async function updateLinkDestinations(
-  { linkId, destinations }: { linkId: string; destinations: LinkSchemaType['destinations'] },
+  {
+    linkId,
+    destinations,
+  }: { linkId: string; destinations: LinkSchemaType['destinations'] },
   accountId: LinkSchemaType['accountId'],
 ) {
   const db = getDb();
@@ -158,7 +183,12 @@ export async function activeLinksLastHour(accountId: string) {
     })
     .from(linkClicks)
     .innerJoin(links, eq(linkClicks.id, links.linkId))
-    .where(and(gt(linkClicks.clickedTime, oneHourAgo.toISOString()), eq(links.accountId, accountId)))
+    .where(
+      and(
+        gt(linkClicks.clickedTime, oneHourAgo.toISOString()),
+        eq(links.accountId, accountId),
+      ),
+    )
     .groupBy(linkClicks.id)
     .orderBy((tbl) => desc(tbl.clickCount))
     .limit(10);
@@ -166,7 +196,9 @@ export async function activeLinksLastHour(accountId: string) {
   return result;
 }
 
-export async function totalLinkClickLastHour(accountId: string): Promise<number> {
+export async function totalLinkClickLastHour(
+  accountId: string,
+): Promise<number> {
   const db = getDb();
   const oneHourAgo = new Date();
   oneHourAgo.setHours(oneHourAgo.getHours() - 1);
@@ -177,7 +209,12 @@ export async function totalLinkClickLastHour(accountId: string): Promise<number>
     })
     .from(linkClicks)
     .innerJoin(links, eq(linkClicks.id, links.linkId))
-    .where(and(gt(linkClicks.clickedTime, oneHourAgo.toISOString()), eq(links.accountId, accountId)));
+    .where(
+      and(
+        gt(linkClicks.clickedTime, oneHourAgo.toISOString()),
+        eq(links.accountId, accountId),
+      ),
+    );
 
   return result[0]?.count ?? 0;
 }
@@ -206,14 +243,21 @@ export async function getLast24And48HourClicks(accountId: string) {
     })
     .from(linkClicks)
     .innerJoin(links, eq(linkClicks.id, links.linkId))
-    .where(and(gt(linkClicks.clickedTime, fortyEightHoursAgo.toISOString()), eq(links.accountId, accountId)));
+    .where(
+      and(
+        gt(linkClicks.clickedTime, fortyEightHoursAgo.toISOString()),
+        eq(links.accountId, accountId),
+      ),
+    );
 
   const last24Hours = result[0]?.last24Hours ?? 0;
   const previous24Hours = result[0]?.previous24Hours ?? 0;
 
   let percentChange = 0;
   if (previous24Hours > 0) {
-    percentChange = Math.round(((last24Hours - previous24Hours) / previous24Hours) * 100);
+    percentChange = Math.round(
+      ((last24Hours - previous24Hours) / previous24Hours) * 100,
+    );
   } else if (last24Hours > 0) {
     percentChange = 100;
   }
@@ -236,7 +280,12 @@ export async function getLast30DaysClicks(accountId: string) {
     })
     .from(linkClicks)
     .innerJoin(links, eq(linkClicks.id, links.linkId))
-    .where(and(gt(linkClicks.clickedTime, thirtyDaysAgo.toISOString()), eq(links.accountId, accountId)));
+    .where(
+      and(
+        gt(linkClicks.clickedTime, thirtyDaysAgo.toISOString()),
+        eq(links.accountId, accountId),
+      ),
+    );
 
   return result[0]?.count ?? 0;
 }
@@ -253,7 +302,12 @@ export async function getLast30DaysClicksByCountry(accountId: string) {
     })
     .from(linkClicks)
     .innerJoin(links, eq(linkClicks.id, links.linkId))
-    .where(and(gt(linkClicks.clickedTime, thirtyDaysAgo.toISOString()), eq(links.accountId, accountId)))
+    .where(
+      and(
+        gt(linkClicks.clickedTime, thirtyDaysAgo.toISOString()),
+        eq(links.accountId, accountId),
+      ),
+    )
     .groupBy(linkClicks.country)
     .orderBy((tbl) => desc(tbl.count));
 

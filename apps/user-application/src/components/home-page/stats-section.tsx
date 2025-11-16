@@ -28,17 +28,29 @@ export function StatsSection() {
     <section className="py-16 bg-primary/5">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Trusted by businesses worldwide</h2>
-          <p className="text-muted-foreground">Join thousands of companies protecting their revenue with our platform</p>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
+            Trusted by businesses worldwide
+          </h2>
+          <p className="text-muted-foreground">
+            Join thousands of companies protecting their revenue with our
+            platform
+          </p>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
-            <Card key={index} className="text-center bg-card/50 backdrop-blur border-0">
+            <Card
+              key={`${stat.label}-${index}`}
+              className="text-center bg-card/50 backdrop-blur border-0"
+            >
               <CardContent className="pt-6">
-                <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">{stat.number}</div>
+                <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">
+                  {stat.number}
+                </div>
                 <div className="font-semibold text-sm mb-2">{stat.label}</div>
-                <div className="text-xs text-muted-foreground">{stat.description}</div>
+                <div className="text-xs text-muted-foreground">
+                  {stat.description}
+                </div>
               </CardContent>
             </Card>
           ))}

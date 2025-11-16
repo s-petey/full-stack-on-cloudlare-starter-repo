@@ -1,13 +1,19 @@
+import { useMutation } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { Link, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Link, Sparkles } from 'lucide-react';
-import { useMutation } from '@tanstack/react-query';
 import { trpc } from '@/router';
-import { toast } from 'sonner';
 
 export const Route = createFileRoute('/app/_authed/create')({
   component: RouteComponent,
@@ -49,13 +55,20 @@ function RouteComponent() {
         {/* Main Form */}
         <Card className="shadow-xl">
           <CardHeader className="pb-8">
-            <CardTitle className="text-2xl font-semibold">Create Link</CardTitle>
-            <CardDescription className="text-base">Create a new short link with a name and destination URL</CardDescription>
+            <CardTitle className="text-2xl font-semibold">
+              Create Link
+            </CardTitle>
+            <CardDescription className="text-base">
+              Create a new short link with a name and destination URL
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8">
             {/* Link Name */}
             <div className="space-y-3">
-              <Label htmlFor="name" className="text-sm font-medium flex items-center gap-2">
+              <Label
+                htmlFor="name"
+                className="text-sm font-medium flex items-center gap-2"
+              >
                 <Link className="w-4 h-4" />
                 Link Name
               </Label>

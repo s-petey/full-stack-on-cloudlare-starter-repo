@@ -13,13 +13,14 @@
     "dev-frontend": "pnpm --filter user-application run dev",
     "dev-data-service": "pnpm --filter data-service run dev",
     "check": "pnpm run -r --parallel check",
-    "fix": "pnpm run -r --parallel fix"
+    "lint": "pnpm run -r lint",
+    "lint:fix": "pnpm run -r --parallel lint:fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "prettier": "^3.6.2",
+    "@biomejs/biome": "^2.3.5",
     "typescript": "^5.9.3"
   },
   "engines": {

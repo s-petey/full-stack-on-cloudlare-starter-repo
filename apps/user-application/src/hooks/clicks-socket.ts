@@ -24,7 +24,9 @@ export function useClickSocket() {
       };
 
       socket.onmessage = (event) => {
-        const data = durableObjectGeoClickArraySchema.decode(JSON.parse(event.data));
+        const data = durableObjectGeoClickArraySchema.decode(
+          JSON.parse(event.data),
+        );
         addClicks(data);
       };
 
@@ -36,7 +38,7 @@ export function useClickSocket() {
         setIsConnected(false);
 
         if (retryCountRef.current < MAX_RETRIES) {
-          const delay = 1000 * Math.pow(2, retryCountRef.current);
+          const delay = 1000 * 2 ** retryCountRef.current;
           retryCountRef.current++;
 
           retryTimeoutRef.current = setTimeout(() => {
@@ -58,7 +60,7 @@ export function useClickSocket() {
         ws.current.close();
       }
     };
-  }, []);
+  }, [addClicks]);
 
   return { isConnected };
 }

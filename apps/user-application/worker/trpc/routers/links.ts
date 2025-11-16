@@ -1,6 +1,3 @@
-import { t } from '@/worker/trpc/trpc-instance';
-import { z } from 'zod';
-import { createLinkSchema, destinationsSchema } from '@repo/data-ops/zod-schema/links';
 import {
   activeLinksLastHour,
   createLink,
@@ -13,8 +10,13 @@ import {
   updateLinkDestinations,
   updateLinkName,
 } from '@repo/data-ops/queries/links';
-
+import {
+  createLinkSchema,
+  destinationsSchema,
+} from '@repo/data-ops/zod-schema/links';
 import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
+import { t } from '@/worker/trpc/trpc-instance';
 
 export const linksTrpcRoutes = t.router({
   linkList: t.procedure
@@ -30,9 +32,11 @@ export const linksTrpcRoutes = t.router({
       return links;
     }),
 
-  createLink: t.procedure.input(createLinkSchema).mutation(async ({ input, ctx }) => {
-    return await createLink(input, ctx.userInfo.userId);
-  }),
+  createLink: t.procedure
+    .input(createLinkSchema)
+    .mutation(async ({ input, ctx }) => {
+      return await createLink(input, ctx.userInfo.userId);
+    }),
 
   updateLinkName: t.procedure
     .input(

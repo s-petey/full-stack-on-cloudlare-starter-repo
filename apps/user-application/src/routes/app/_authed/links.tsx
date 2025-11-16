@@ -1,28 +1,51 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
-import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Copy, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import { toast } from 'sonner';
-import { trpc } from '@/router';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  Copy,
+} from 'lucide-react';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { trpc } from '@/router';
 
 export const Route = createFileRoute('/app/_authed/links')({
   component: RouteComponent,
   loader: async ({ context }) => {
-    await context.queryClient.prefetchQuery(context.trpc.links.linkList.queryOptions({}));
+    await context.queryClient.prefetchQuery(
+      context.trpc.links.linkList.queryOptions({}),
+    );
   },
 });
 
 let BACKEND_URL = import.meta.env.VITE_BACKEND_HOST;
 if (BACKEND_URL.includes('localhost')) {
-  BACKEND_URL = 'http://' + BACKEND_URL + '/r/';
+  BACKEND_URL = `http://${BACKEND_URL}/r/`;
 } else {
-  BACKEND_URL = 'https://' + BACKEND_URL + '/r/';
+  BACKEND_URL = `https://${BACKEND_URL}/r/`;
 }
 
 function RouteComponent() {
-  const { data: links } = useSuspenseQuery(trpc.links.linkList.queryOptions({}));
+  const { data: links } = useSuspenseQuery(
+    trpc.links.linkList.queryOptions({}),
+  );
   const nav = useNavigate();
 
   const columnHelper = createColumnHelper<(typeof links)[0]>();
@@ -30,7 +53,7 @@ function RouteComponent() {
     try {
       await navigator.clipboard.writeText(text);
       toast.success('Link copied to clipboard');
-    } catch (err) {
+    } catch (_err) {
       toast.error('Failed to copy link');
     }
   };
@@ -44,7 +67,9 @@ function RouteComponent() {
       header: 'Link',
       cell: (info) => (
         <div className="flex items-center gap-2">
-          <span className="truncate max-w-[200px]">{BACKEND_URL + info.getValue()}</span>
+          <span className="truncate max-w-[200px]">
+            {BACKEND_URL + info.getValue()}
+          </span>
           <Button
             variant="ghost"
             size="sm"
@@ -89,7 +114,12 @@ function RouteComponent() {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead className="pl-4" key={header.id}>
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -111,13 +141,21 @@ function RouteComponent() {
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -127,9 +165,14 @@ function RouteComponent() {
       </div>
       <div className="flex items-center justify-between px-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{' '}
+          Showing{' '}
+          {table.getState().pagination.pageIndex *
+            table.getState().pagination.pageSize +
+            1}{' '}
+          to{' '}
           {Math.min(
-            (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
+            (table.getState().pagination.pageIndex + 1) *
+              table.getState().pagination.pageSize,
             table.getFilteredRowModel().rows.length,
           )}{' '}
           of {table.getFilteredRowModel().rows.length} entries
