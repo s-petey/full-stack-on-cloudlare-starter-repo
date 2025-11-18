@@ -1,13 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
 import {
-  ActiveAreasMap,
-  ActiveLinksTable,
-  ActiveRegionMap,
   MetricsCards,
-  ProblematicLinksTable,
+  ActiveRegionMap,
+  ActiveAreasMap,
   TopCountriesTable,
-} from '@/components/dashboard';
-import { useClickSocket } from '@/hooks/clicks-socket';
+  ProblematicLinksTable,
+  ActiveLinksTable,
+} from 'src/components/dashboard';
+import { useClickSocket } from 'src/hooks/clicks-socket';
 
 export const Route = createFileRoute('/app/_authed/')({
   component: RouteComponent,

@@ -1,6 +1,6 @@
 import { ArrowRight, Shield, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 
 export function CtaSection() {
   return (

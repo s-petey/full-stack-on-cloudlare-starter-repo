@@ -12,10 +12,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { queryClient, trpc } from '@/router';
+} from '../ui/alert-dialog';
+import { Label } from '../ui/label';
+import { Switch } from '../ui/switch';
+import { queryClient, trpc } from 'src/router';
 
 interface GeoRoutingToggleProps {
   destinations: DestinationsSchemaType;

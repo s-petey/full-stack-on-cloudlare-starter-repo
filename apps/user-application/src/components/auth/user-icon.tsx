@@ -1,15 +1,15 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useNavigate } from '@tanstack/react-router';
 import { LogOut, User } from 'lucide-react';
 import { useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Button } from '../ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from '../ui/dialog';
 import { authClient } from './client';
 
 type UserProfilePopupProps = {

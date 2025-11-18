@@ -1,6 +1,6 @@
 import { durableObjectGeoClickArraySchema } from '@repo/data-ops/zod-schema/links';
 import { useEffect, useRef, useState } from 'react';
-import { useGeoClickStore } from '@/hooks/geo-clicks-store';
+import { useGeoClickStore } from './geo-clicks-store';
 
 const MAX_RETRIES = 5;
 

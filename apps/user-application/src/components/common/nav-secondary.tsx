@@ -1,15 +1,15 @@
 'use client';
+// TODO: Does ^ need to be here? is it just copied?
 
 import type { Icon } from '@tabler/icons-react';
-import type * as React from 'react';
-
+import type { ComponentPropsWithoutRef } from 'react';
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '../ui/sidebar';
 
 export function NavSecondary({
   items,
@@ -20,7 +20,7 @@ export function NavSecondary({
     url: string;
     icon: Icon;
   }[];
-} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+} & ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>

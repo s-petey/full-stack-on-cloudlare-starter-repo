@@ -1,17 +1,16 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
-import { MousePointer } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MousePointer, Table } from 'lucide-react';
+import { formatRelativeTime } from 'src/lib/utils';
+import { trpc } from 'src/router';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { formatRelativeTime } from '@/lib/utils';
-import { trpc } from '@/router';
+} from '../ui/table';
 
 export function ActiveLinksTable() {
   const navigate = useNavigate();

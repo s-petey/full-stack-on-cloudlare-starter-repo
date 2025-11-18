@@ -1,9 +1,9 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
-import { authClient } from '@/components/auth/client';
-import { AppSidebar } from '@/components/common/app-sidebar';
-import { SiteHeader } from '@/components/common/site-header';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
-import { Toaster } from '@/components/ui/sonner';
+import { authClient } from 'src/components/auth/client';
+import { AppSidebar } from 'src/components/common/app-sidebar';
+import { SiteHeader } from 'src/components/common/site-header';
+import { SidebarInset, SidebarProvider } from 'src/components/ui/sidebar';
+import { Toaster } from 'src/components/ui/sonner';
 
 export const Route = createFileRoute('/app/_authed')({
   component: RouteComponent,

@@ -5,11 +5,11 @@ import iso31661 from 'iso-3166-1';
 import { Search, X } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { toast } from 'sonner';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { queryClient, trpc } from '@/router';
+import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
+import { queryClient, trpc } from 'src/router';
 
 interface GeographicDestinationsListProps {
   linkId: string;

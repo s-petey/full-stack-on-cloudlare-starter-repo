@@ -1,14 +1,14 @@
+import { Separator } from '@radix-ui/react-dropdown-menu';
 import { useState } from 'react';
 import { siGoogle } from 'simple-icons';
-import { Button } from '@/components/ui/button';
+import { Button } from '../ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Separator } from '@/components/ui/separator';
+} from '../ui/dialog';
 import { authClient } from './client';
 
 interface LoginPopupProps {

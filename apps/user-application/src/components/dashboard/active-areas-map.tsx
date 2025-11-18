@@ -5,9 +5,9 @@ import {
   Geography,
   Marker,
 } from 'react-simple-maps';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useGeoClickStore } from '@/hooks/geo-clicks-store';
-import { groupClicksByMile } from '@/lib/utils';
+import { useGeoClickStore } from 'src/hooks/geo-clicks-store';
+import { groupClicksByMile } from 'src/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
 export function ActiveAreasMap() {
   const { clicks } = useGeoClickStore();

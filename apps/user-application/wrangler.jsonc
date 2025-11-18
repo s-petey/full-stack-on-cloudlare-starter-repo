@@ -10,7 +10,8 @@
   "assets": {
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/auth/*", "/trpc/*", "/click-socket"]
+    "run_worker_first": ["/api/auth/*", "/trpc/*", "/click-socket"],
+    "directory": "./dist"
   },
   "observability": {
     "enabled": true

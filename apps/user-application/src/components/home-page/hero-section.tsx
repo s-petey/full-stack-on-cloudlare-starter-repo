@@ -1,9 +1,9 @@
 import { ArrowRight, Globe, Shield, Sparkles, Zap } from 'lucide-react';
-import { authClient } from '@/components/auth/client';
-import { LoginPopup } from '@/components/auth/login-popup';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { authClient } from '../auth/client';
+import { LoginPopup } from '../auth/login-popup';
+import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 
 export function HeroSection() {
   const { data } = authClient.useSession();

@@ -1,14 +1,10 @@
-import { LoginPopup } from '@/components/auth/login-popup';
-import { UserCircle } from '@/components/auth/user-icon';
-import { Button } from '@/components/ui/button';
-// import { authClient } from "@/components/auth/client";
+import { authClient } from '../auth/client';
+import { LoginPopup } from '../auth/login-popup';
+import { UserCircle } from '../auth/user-icon';
+import { Button } from '../ui/button';
 
 export function Navigation() {
-  // const { data: user, isPending } = authClient.useSession();
-
-  // Dummy data for auth client
-  const user = { id: '1', name: 'John Doe', email: 'john@example.com' };
-  const isPending = false;
+  const { data: user, isPending } = authClient.useSession();
 
   return (
     <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-4xl mx-auto px-4">

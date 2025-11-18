@@ -1,13 +1,12 @@
-import { MapPin } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MapPin, Table } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '../ui/table';
 
 interface City {
   city: string;

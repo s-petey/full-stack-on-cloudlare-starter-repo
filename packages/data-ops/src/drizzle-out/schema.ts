@@ -6,7 +6,7 @@ import {
   sqliteTable,
   text,
 } from 'drizzle-orm/sqlite-core';
-import { evaluationProductStatus } from '@/zod/links';
+import { evaluationProductStatus } from '../zod/links';
 
 export const links = sqliteTable('links', {
   linkId: text('link_id').primaryKey().notNull(),

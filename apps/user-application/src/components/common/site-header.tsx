@@ -1,6 +1,6 @@
 import { useRouterState } from '@tanstack/react-router';
-import { Separator } from '@/components/ui/separator';
-import { SidebarTrigger } from '@/components/ui/sidebar';
+import { Separator } from '../ui/separator';
+import { SidebarTrigger } from '../ui/sidebar';
 
 export function SiteHeader() {
   const routerState = useRouterState();

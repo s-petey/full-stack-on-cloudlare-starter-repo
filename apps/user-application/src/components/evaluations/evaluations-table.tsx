@@ -6,24 +6,23 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ChevronLeft, ChevronRight, Info } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Info, Table } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { trpc } from 'src/router';
+import { Button } from '../ui/button';
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '../ui/table';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { trpc } from '@/router';
+} from '../ui/tooltip';
 
 type Evaluation = {
   id: string;

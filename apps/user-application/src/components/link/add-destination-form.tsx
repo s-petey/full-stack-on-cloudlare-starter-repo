@@ -4,24 +4,20 @@ import iso31661 from 'iso-3166-1';
 import { Check, ChevronsUpDown, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { cn } from 'src/lib/utils';
+import { trpc } from 'src/router';
+import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/card';
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from '@/components/ui/command';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
-import { queryClient, trpc } from '@/router';
+} from '../ui/command';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
 interface AddDestinationFormProps {
   usedCountryCodes: string[];

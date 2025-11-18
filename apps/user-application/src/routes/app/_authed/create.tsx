@@ -3,17 +3,17 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Link, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
+import { Button } from 'src/components/ui/button';
 import {
   Card,
-  CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { trpc } from '@/router';
+  CardDescription,
+  CardContent,
+} from 'src/components/ui/card';
+import { Input } from 'src/components/ui/input';
+import { Label } from 'src/components/ui/label';
+import { trpc } from 'src/router';
 
 export const Route = createFileRoute('/app/_authed/create')({
   component: RouteComponent,

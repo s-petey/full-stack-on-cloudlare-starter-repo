@@ -1,8 +1,5 @@
 import { IconInnerShadowTop } from '@tabler/icons-react';
-import type * as React from 'react';
-
-import { NavMain } from '@/components/common/nav-main';
-import { NavUser } from '@/components/common/nav-user';
+import type { ComponentProps } from 'react';
 import {
   Sidebar,
   SidebarContent,
@@ -11,9 +8,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '../ui/sidebar';
+import { NavMain } from './nav-main';
+import { NavUser } from './nav-user';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>

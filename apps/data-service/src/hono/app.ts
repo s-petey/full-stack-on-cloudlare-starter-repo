@@ -5,7 +5,7 @@ import z from 'zod';
 import {
   captureLinkClickInBackground,
   getRoutingDestination,
-} from '@/helpers/route-ops';
+} from '../helpers/route-ops';
 
 const App = new Hono<{ Bindings: Env }>();
 

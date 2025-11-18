@@ -13,18 +13,18 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Copy,
+  Table,
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
+import { Button } from 'src/components/ui/button';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { trpc } from '@/router';
+  TableHead,
+  TableBody,
+  TableCell,
+} from 'src/components/ui/table';
+import { trpc } from 'src/router';
 
 export const Route = createFileRoute('/app/_authed/links')({
   component: RouteComponent,

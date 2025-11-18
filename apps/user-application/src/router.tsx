@@ -2,8 +2,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter as createTanStackRouter } from '@tanstack/react-router';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
-import Pending from '@/components/common/pending';
-import type { AppRouter } from '@/worker/trpc/router';
+import type { AppRouter } from 'worker/trpc/router';
+import Pending from './components/common/pending';
 import { routeTree } from './routeTree.gen';
 
 export const queryClient = new QueryClient();

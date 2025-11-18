@@ -1,12 +1,12 @@
 import { BarChart3, Brain, Globe, Link, Shield, Zap } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '../ui/badge';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '../ui/card';
 
 const features = [
   {

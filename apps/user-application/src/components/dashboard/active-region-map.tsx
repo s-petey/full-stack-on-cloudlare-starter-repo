@@ -6,17 +6,17 @@ import {
   Geography,
   Marker,
 } from 'react-simple-maps';
+import { useGeoClickStore } from 'src/hooks/geo-clicks-store';
+import { groupClicksByMile } from 'src/lib/utils';
 import countries from 'world-countries';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '../ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { useGeoClickStore } from '@/hooks/geo-clicks-store';
-import { groupClicksByMile } from '@/lib/utils';
+} from '../ui/dropdown-menu';
 
 type Region = {
   id: string;

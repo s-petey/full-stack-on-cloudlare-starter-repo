@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { EvaluationsTable } from '@/components/evaluations/evaluations-table';
+import { EvaluationsTable } from 'src/components/evaluations/evaluations-table';
 
 export const Route = createFileRoute('/app/_authed/evaluations')({
   component: RouteComponent,

@@ -11,7 +11,8 @@
     "better-auth-generate": "pnpx @better-auth/cli generate --config auth-gen/auth.ts --output=src/drizzle-out/auth-schema.ts",
     "check": "tsc --project tsconfig.json",
     "lint:fix": "biome check . --write",
-    "lint": "biome check ."
+    "lint": "biome check .",
+    "test:server": "echo 'No tests defined yet'"
   },
   "exports": {
     "./database": "./src/db/database.ts",

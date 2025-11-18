@@ -2,12 +2,10 @@ import { getAuth } from '@repo/data-ops/auth';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
-import { createContext } from '@/worker/trpc/context';
-import { appRouter } from '@/worker/trpc/router';
+import { appRouter } from 'worker/trpc/router';
+import { createContext } from 'worker/trpc/context';
 
-// TODO: Why do we have both trpc and hono?
-
-export const App = new Hono<{
+const App = new Hono<{
   Bindings: ServiceBindings;
   Variables: {
     userId: string;
@@ -60,3 +58,5 @@ App.all('/trpc/*', authMiddleware, (c) => {
       }),
   });
 });
+
+export { App };

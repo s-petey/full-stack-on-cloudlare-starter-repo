@@ -1,13 +1,13 @@
 import { and, count, desc, eq, gt, max, sql } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
-import { getDb } from '@/db/database';
-import { linkClicks, links } from '@/drizzle-out/schema';
+import { getDb } from '../db/database';
+import { links, linkClicks } from '../drizzle-out/schema';
 import {
   type CreateLinkSchemaType,
   type LinkSchemaType,
   linkSchema,
-} from '@/zod/links';
-import { type LinkClickMessageType, stringToIsoDateTime } from '@/zod/queue';
+} from '../zod/links';
+import { type LinkClickMessageType, stringToIsoDateTime } from '../zod/queue';
 
 export async function createLink(
   link: CreateLinkSchemaType,

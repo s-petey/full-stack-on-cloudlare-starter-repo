@@ -16,7 +16,7 @@ import {
 } from '@repo/data-ops/zod-schema/links';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { t } from '@/worker/trpc/trpc-instance';
+import { t } from '../trpc-instance';
 
 export const linksTrpcRoutes = t.router({
   linkList: t.procedure

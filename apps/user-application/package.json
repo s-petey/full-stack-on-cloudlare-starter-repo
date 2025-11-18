@@ -9,7 +9,8 @@
     "stage:build": "vite build --mode stage && tsc",
     "build": "vite build && tsc",
     "serve": "vite preview",
-    "test": "vitest run",
+    "test": "vitest",
+    "test:server": "vitest --project server",
     "stage:cf-typegen": "wrangler types --env-interface Env --env stage",
     "cf-typegen": "wrangler types --env-interface Env --env stage",
     "cf-migrate": "wrangler d1 migrations apply --env stage --local smart-links-stage --persist-to ../../.wrangler/state",
@@ -78,6 +79,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.13.17",
+    "@cloudflare/vitest-pool-workers": "^0.10.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.0",
     "@types/react": "^19.2.2",
@@ -87,8 +89,7 @@
     "jsdom": "^27.0.1",
     "typescript": "^5.9.3",
     "vite": "^7.1.12",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^4.0.5",
+    "vitest": "^3.2.4",
     "web-vitals": "^5.1.0",
     "wrangler": "^4.45.2"
   }

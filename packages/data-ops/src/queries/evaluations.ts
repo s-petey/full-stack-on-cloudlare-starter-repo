@@ -1,7 +1,7 @@
 import { and, desc, eq, gt } from 'drizzle-orm';
-import { getDb } from '@/db/database';
-import { destinationEvaluations } from '@/drizzle-out/schema';
-import type { EvaluationProductStatusType } from '@/zod/links';
+import { getDb } from '../db/database';
+import { destinationEvaluations } from '../drizzle-out/schema';
+import type { EvaluationProductStatusType } from '../zod/links';
 
 // TODO: Zod or no?
 interface AddEvaluationParams {

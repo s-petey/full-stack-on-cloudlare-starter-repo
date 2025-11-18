@@ -1,21 +1,21 @@
+import { Separator } from '@radix-ui/react-separator';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 import {
-  DefaultUrlEditor,
-  GeoRoutingSection,
-  GeoRoutingToggle,
   LinkNameEditor,
-} from '@/components/link';
+  DefaultUrlEditor,
+  GeoRoutingToggle,
+  GeoRoutingSection,
+} from 'src/components/link';
 import {
   Card,
-  CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { trpc } from '@/router';
+  CardDescription,
+  CardContent,
+} from 'src/components/ui/card';
+import { trpc } from 'src/router';
 
 export const Route = createFileRoute('/app/_authed/link/$id')({
   component: RouteComponent,

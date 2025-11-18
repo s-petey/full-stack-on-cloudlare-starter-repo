@@ -1,17 +1,16 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
-import { AlertTriangle, Copy, Info } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertTriangle, Copy, Info, Table } from 'lucide-react';
+import { trpc } from 'src/router';
+import { Button } from '../ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { trpc } from '@/router';
+} from '../ui/table';
 
 export function ProblematicLinksTable() {
   const navigate = useNavigate();
