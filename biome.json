@@ -7,14 +7,15 @@
   },
   "files": {
     "ignoreUnknown": false,
-		"includes": [
-			"**",
-			"!**/*routeTree.gen.ts",
+    "includes": [
+      "**",
+      "!**/*routeTree.gen.ts",
       "!**/globals.css",
       "!!**/worker-configuration.d.ts",
       "!!**/service-bindings.d.ts",
-			"!!**/dist"
-		]
+      "!!**/dist",
+      "!!packages/data-ops/src/drizzle-out/meta/*.json"
+    ]
   },
   "formatter": {
     "enabled": true,

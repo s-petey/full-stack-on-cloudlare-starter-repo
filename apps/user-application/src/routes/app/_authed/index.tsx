@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 import {
-  MetricsCards,
-  ActiveRegionMap,
   ActiveAreasMap,
-  TopCountriesTable,
-  ProblematicLinksTable,
   ActiveLinksTable,
+  ActiveRegionMap,
+  MetricsCards,
+  ProblematicLinksTable,
+  TopCountriesTable,
 } from 'src/components/dashboard';
 import { useClickSocket } from 'src/hooks/clicks-socket';
 

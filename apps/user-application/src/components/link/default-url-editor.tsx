@@ -2,10 +2,10 @@ import type { DestinationsSchemaType } from '@repo/data-ops/zod-schema/links';
 import { useMutation } from '@tanstack/react-query';
 import { Check, Edit3 } from 'lucide-react';
 import { useState } from 'react';
+import { trpc } from 'src/router';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { trpc } from 'src/router';
 
 interface DefaultUrlEditorProps {
   destinations: DestinationsSchemaType;

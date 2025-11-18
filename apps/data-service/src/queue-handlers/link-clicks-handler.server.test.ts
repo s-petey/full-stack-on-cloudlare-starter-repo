@@ -1,8 +1,8 @@
 import { addLinkClick } from '@repo/data-ops/queries/links';
 import type { LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { handleLinkClick } from './link-clicks-handler';
 import { scheduleEvalWorkflow } from '../helpers/route-ops';
+import { handleLinkClick } from './link-clicks-handler';
 
 vi.mock('@repo/data-ops/queries/links', () => ({
   addLinkClick: vi.fn(),

@@ -18,11 +18,11 @@ import {
 import { toast } from 'sonner';
 import { Button } from 'src/components/ui/button';
 import {
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from 'src/components/ui/table';
 import { trpc } from 'src/router';
 

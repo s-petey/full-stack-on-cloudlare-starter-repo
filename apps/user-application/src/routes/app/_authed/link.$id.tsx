@@ -3,17 +3,17 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 import {
-  LinkNameEditor,
   DefaultUrlEditor,
-  GeoRoutingToggle,
   GeoRoutingSection,
+  GeoRoutingToggle,
+  LinkNameEditor,
 } from 'src/components/link';
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
 } from 'src/components/ui/card';
 import { trpc } from 'src/router';
 

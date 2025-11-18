@@ -6,8 +6,8 @@ import {
 import { initDatabase } from '@repo/data-ops/database';
 import { addEvaluation } from '@repo/data-ops/queries/evaluations';
 import { getLinkById } from '@repo/data-ops/queries/links';
-import { collectDestinationInfo } from '../helpers/browser-render';
 import { aiDestinationChecker } from '../helpers/ai-destination-checker';
+import { collectDestinationInfo } from '../helpers/browser-render';
 
 // TODO: Should this be zod instead?
 interface DestinationStatusEvaluationParams {

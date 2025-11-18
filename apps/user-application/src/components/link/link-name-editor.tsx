@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import { Check, Edit3, Eye, Link } from 'lucide-react';
 import { useState } from 'react';
+import { queryClient, trpc } from 'src/router';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { queryClient, trpc } from 'src/router';
 
 interface LinkNameEditorProps {
   linkId: string;

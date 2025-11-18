@@ -2,13 +2,13 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import iso31661 from 'iso-3166-1';
 import { Flag, Table } from 'lucide-react';
 import { trpc } from 'src/router';
-import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import {
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '../ui/table';
 
 export function TopCountriesTable() {

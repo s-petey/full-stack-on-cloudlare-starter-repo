@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Globe } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { queryClient, trpc } from 'src/router';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,7 +16,6 @@ import {
 } from '../ui/alert-dialog';
 import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
-import { queryClient, trpc } from 'src/router';
 
 interface GeoRoutingToggleProps {
   destinations: DestinationsSchemaType;

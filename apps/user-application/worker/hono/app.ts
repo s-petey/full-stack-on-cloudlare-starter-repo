@@ -2,8 +2,8 @@ import { getAuth } from '@repo/data-ops/auth';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
-import { appRouter } from 'worker/trpc/router';
 import { createContext } from 'worker/trpc/context';
+import { appRouter } from 'worker/trpc/router';
 
 const App = new Hono<{
   Bindings: ServiceBindings;

@@ -1,8 +1,8 @@
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Activity, Clock, Link } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { trpc } from 'src/router';
-import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
 interface MetricCardProps {
   title: string;
