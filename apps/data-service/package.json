@@ -25,6 +25,7 @@
     "wrangler": "^4.45.2"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.7.4",
     "@repo/data-ops": "workspace:*",
     "ai": "^5.0.82",
     "drizzle-orm": "^0.44.7",
